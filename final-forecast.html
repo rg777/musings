@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The metronome and the escape artist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDE6D6; --card:#F4EFE2; --ink:#221F1A; --ink-soft:#6B6455;
+    --grey:#8C8573; --hair:#DCD3BE; --divider:#D9D0BC;
+    --arg:#33507A; --arg-tint:rgba(51,80,122,0.14);
+    --esp:#B5533C; --esp-tint:rgba(181,83,60,0.14);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Karla",Arial,sans-serif;font-size:18px;line-height:1.72;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:700px;margin:0 auto;padding:56px 24px 100px}
+  .back{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;
+    color:var(--ink-soft);text-decoration:none;margin-bottom:22px}
+  .back:hover{color:var(--arg)}
+  .back svg{width:13px;height:13px}
+  h1{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:42px;line-height:1.1;
+    letter-spacing:-0.01em;margin:0 0 14px;max-width:22ch}
+  .squiggle{display:block;width:150px;height:12px;margin:2px 0 20px}
+  .deck{font-size:19px;line-height:1.5;color:var(--ink-soft);margin:0 0 28px;max-width:54ch}
+  .meta{font-size:12.5px;letter-spacing:.03em;color:var(--grey);margin:0 0 30px}
+  article p{margin:0 0 22px}
+  .kicker{font-family:"Fraunces",Georgia,serif;font-style:italic;color:var(--arg)}
+  figure{margin:40px 0}
+  .figtab{width:30px;height:3px;background:var(--arg);margin-bottom:12px;border-radius:2px}
+  .figtitle{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:22px;margin:0 0 4px}
+  .figsub{font-size:14px;color:var(--ink-soft);margin:0 0 16px;line-height:1.4}
+  .source{font-size:12px;color:var(--grey);margin-top:12px;display:flex;align-items:center;gap:7px}
+  .source::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--arg);flex:0 0 auto}
+  .foot{font-size:12px;color:var(--grey);margin-top:5px}
+  svg{display:block;width:100%;height:auto;overflow:visible}
+  .lab{font-family:"Karla",sans-serif;fill:var(--grey);font-size:11px}
+  .anno{font-family:"Karla",sans-serif;font-size:11.5px;font-weight:600}
+
+  /* headline split bar */
+  .hbig{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px}
+  .hbig .side{display:flex;flex-direction:column}
+  .hbig .side.r{align-items:flex-end}
+  .hbig .pct{font-family:"Fraunces",Georgia,serif;font-weight:700;font-size:58px;line-height:.9}
+  .hbig .pct.esp{color:var(--esp)} .hbig .pct.arg{color:var(--arg)}
+  .hbig .tm{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-top:6px}
+  .splitbar{display:flex;height:34px;border-radius:6px;overflow:hidden;border:1px solid var(--divider)}
+  .seg{height:100%}
+  .seglegend{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--ink-soft)}
+  .sl{display:flex;align-items:center;gap:6px}
+  .sw{width:11px;height:11px;border-radius:2px;display:inline-block}
+
+  /* routes */
+  .routes{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  .route h4{font-family:"Fraunces",Georgia,serif;font-size:16px;margin:0 0 2px}
+  .route .sub{font-size:11.5px;color:var(--grey);margin-bottom:10px}
+  .mrow{margin-bottom:9px}
+  .mtop{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:3px}
+  .mtop .opp{font-weight:600}
+  .mtop .res{color:var(--grey)}
+  .mtop .badge{display:inline-block;font-size:9.5px;font-weight:700;padding:0 5px;border-radius:8px;margin-left:5px;vertical-align:1px}
+  .badge.aet{background:var(--ink);color:var(--paper)}
+  .badge.cb{background:var(--esp-tint);color:var(--esp);border:1px solid var(--esp)}
+  .xgbars{display:flex;flex-direction:column;gap:2px}
+  .xgtrack{height:8px;background:var(--hair);border-radius:2px;position:relative}
+  .xgfill{height:100%;border-radius:2px}
+  .xgval{position:absolute;right:-2px;top:-3px;font-size:9px;color:var(--grey);transform:translateX(100%)}
+  @media(max-width:560px){.routes{grid-template-columns:1fr}}
+
+  /* grid heatmap */
+  .heat{display:grid;grid-template-columns:auto repeat(6,1fr);gap:3px;max-width:480px}
+  .heat .cell{aspect-ratio:1.35;display:flex;align-items:center;justify-content:center;
+    font-size:11px;border-radius:3px;position:relative;flex-direction:column}
+  .heat .hdr{font-size:11px;color:var(--grey);font-weight:700;background:none}
+  .heat .cell .p{font-size:9.5px;opacity:.75}
+  .heatlab{font-size:12px;color:var(--ink-soft);margin:8px 0 0}
+
+  .idxbox{margin:28px 0;padding:16px 20px 15px;border:1px solid var(--divider);
+    border-left:3px solid var(--arg);background:var(--card);border-radius:6px}
+  .idxbox .idxlab{font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--arg);margin-bottom:9px}
+  .idxbox .idxeq{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:16.5px;line-height:1.6}
+  .idxbox .idxeq b{color:var(--esp)}
+  .idxbox .idxkey{font-size:13px;color:var(--ink-soft);margin-top:9px;line-height:1.55}
+
+  .refs{margin:60px 0 0;padding-top:14px;border-top:2px dashed var(--divider)}
+  .refs .refhead{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:26px;margin:12px 0 8px}
+  .refs .refintro{font-size:16px;color:var(--ink-soft);margin:0 0 18px;line-height:1.6}
+  .reflist dt{font-weight:700;font-size:13.5px;color:var(--arg);margin:20px 0 5px}
+  .reflist dd{margin:0;font-size:16px;line-height:1.6}
+  .reflist dd .eg{color:var(--ink-soft);font-style:italic}
+  .reftabhead{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:19px;margin:28px 0 4px}
+  .tabnote{font-size:13px;color:var(--ink-soft);margin:0 0 12px;line-height:1.55}
+  .tabwrap{overflow-x:auto}
+  .dtab{border-collapse:collapse;width:100%;font-size:13px}
+  .dtab th,.dtab td{padding:6px 8px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--divider)}
+  .dtab th{font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:var(--grey);font-weight:700;border-bottom:1.5px solid var(--ink)}
+  .dtab td.l,.dtab th.l{text-align:left}
+  .dtab tr.esp td.l{color:var(--esp);font-weight:600}
+  .dtab tr.arg td.l{color:var(--arg);font-weight:600}
+  .refnote{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:26px 0 0;padding-top:16px;border-top:1px solid var(--divider)}
+
+  @media(max-width:560px){h1{font-size:32px}body{font-size:17px}.hbig .pct{font-size:42px}}
+  @media (prefers-reduced-motion:no-preference){
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.in{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="back" href="index.html">
+      <svg viewBox="0 0 12 12" fill="none"><path d="M10 6H2M5 2 1 6l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Random Musings
+    </a>
+    <h1>The metronome and the escape artist</h1>
+    <svg class="squiggle" viewBox="0 0 150 12" fill="none">
+      <path d="M2 7 C 14 2, 24 2, 36 7 S 58 12, 70 7 S 92 2, 104 7 S 126 12, 138 7"
+        stroke="#B5533C" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    </svg>
+    <p class="deck">Spain haven't trailed for a single minute at this World Cup. Argentina have made a habit of nearly losing, then winning anyway. Sunday's final comes down to which of those is a skill. I built a model to find out.</p>
+    <p class="meta">16 July 2026 &middot; a forecast, on the record before kickoff</p>
+  </header>
+
+  <article>
+    <p>On Sunday afternoon at MetLife Stadium, Argentina and Spain will play a World Cup final against each other for the first time ever. It's a collision of resumes: the reigning world champions against the reigning European champions, the two top-ranked teams on the planet, both unbeaten this tournament. Argentina are chasing something nobody has done since Brazil in 1962: winning back-to-back World Cups. Spain are chasing their second star, sixteen years after their first.</p>
+
+    <p>But what makes this final genuinely fascinating is <em>how</em> the two teams got here, because they could not have done it more differently. Spain have played like a metronome. Six wins and a draw, thirteen goals scored, exactly one conceded. They are the first team in World Cup history to keep six clean sheets in a single tournament, and they have not trailed for even one minute of it. Their unbeaten run across all competitions now stretches past three years. Argentina, meanwhile, have won all seven of their matches, and nearly lost half of them. Extra time against debutants Cape Verde. Two goals down against Egypt before storming back. Extra time again against Switzerland. And in the semifinal against England, a goal down until the 85th minute, when Enzo Fernández equalised and Lautaro Martínez headed a Messi cross home in stoppage time. Three consecutive knockout matches rescued from the brink.</p>
+
+    <p>So: the metronome or the escape artist? The honest way to answer is to build a forecast, write it down before the match, and let Sunday grade it. Here's mine.</p>
+
+    <figure class="reveal" id="fig1">
+      <div class="figtab"></div>
+      <div class="figtitle">The headline number</div>
+      <div class="figsub">Probability of lifting the trophy, including extra time and penalties</div>
+      <div id="headline"></div>
+      <div class="source">Author's model. Details and every assumption in the notes below</div>
+    </figure>
+
+    <p>Spain, 64 to 36. Not a coin flip, but nowhere near a formality either: roughly the odds of rolling anything but a six. And the shape of the number matters as much as the number. The model gives Spain a 48% chance of winning inside 90 minutes against Argentina's 23%, but it also says there's a 28% chance this final needs extra time, and a 16% chance the World Cup is decided on penalties. If you're Argentina, that last number is the plan: survive, shorten the match, and take your chances from twelve yards with Emiliano Martínez in goal.</p>
+
+    <p>Where does 64 come from? The model has two halves, and the striking thing is that they independently agree. The first half is Elo, the rating system that has repeatedly proven the best public predictor of international football. Spain sit first in the world at 2,232, Argentina second at 2,177. That 55-point gap, on a neutral pitch, makes Spain about a 59-41 favourite before you look at a single match from this tournament. The second half is expected goals: what each team actually created and conceded across their seven matches here, adjusted for who they played. And that half is even more bullish on Spain, about 65-35, mostly because of their defence. Spain conceded chances worth barely 0.3 expected goals per match, a figure with no precedent in the tournament's recorded history. Argentina created slightly more than Spain going forward, but leaked three times as much coming back.</p>
+
+    <figure class="reveal" id="fig2">
+      <div class="figtab"></div>
+      <div class="figtitle">Seven matches, two temperaments</div>
+      <div class="figsub">Chances created and conceded (expected goals) in every match. Solid bar: created. Pale bar: conceded</div>
+      <div class="routes" id="routes"></div>
+      <div class="foot">aet = won in extra time &middot; comeback = trailed in the match and won</div>
+      <div class="source">Match xG from RealGM's tournament tracker; semifinals from Opta via ESPN</div>
+    </figure>
+
+    <p>The chart above is the whole argument in one picture. Spain's conceded bars are almost invisible: their worst defensive match of the entire tournament was 0.60 expected goals against, versus Portugal. Argentina's attacking bars are excellent, consistently around two expected goals a match, but the conceded bars keep flickering, and three of those seven matches carry a badge that should worry their fans: two went to extra time, and three needed a comeback. The pattern has a name in analytics, and it isn't "clutch." It's variance. Teams that repeatedly win close matches from losing positions are usually running hot, not revealing a hidden skill, and the numbers regress eventually. Argentina's fans will tell you Messi's teams are the exception. On Sunday we find out.</p>
+
+    <p>There's one more ingredient: legs. Argentina have played sixty more minutes of football than Spain at this tournament thanks to those two extra times, and they get one day less rest, having played their semifinal on Wednesday to Spain's Tuesday. The effect is small and I've kept it small in the model, but it points the same direction as everything else.</p>
+
+    <figure class="reveal" id="fig3">
+      <div class="figtab"></div>
+      <div class="figtitle">How the number is built</div>
+      <div class="figsub">Spain's probability of lifting the trophy, step by step</div>
+      <svg id="waterfall" viewBox="0 0 700 240" aria-label="Waterfall chart: a neutral 50% baseline rises to 58.8% on the Elo ratings gap, to 62.0% when tournament expected-goals form is blended in, and to 64.3% after a small fatigue adjustment for Argentina's extra minutes and shorter rest."></svg>
+      <div class="source">Author's model. Each step is explained in the notes below</div>
+    </figure>
+
+    <p>And what scoreline should you expect? The model's favourite is the most Spanish result imaginable: 1-0. Low-scoring outcomes dominate, because this is a meeting of the tournament's two best defences and its two most patient midfields. Anything involving four or more goals is a genuine long shot.</p>
+
+    <figure class="reveal" id="fig4">
+      <div class="figtab"></div>
+      <div class="figtitle">The scoreboard, in probabilities</div>
+      <div class="figsub">Chance of each 90-minute scoreline. Rows: Spain. Columns: Argentina</div>
+      <div class="heat" id="heat"></div>
+      <div class="heatlab" id="heatlab"></div>
+      <div class="source">Author's model, Poisson scoreline grid</div>
+    </figure>
+
+    <p>Now, the disclaimer that matters. This model is deliberately blind to names. It doesn't know that Lionel Messi, at 39, leads the Golden Boot with eight goals and four assists, has scored or assisted in eleven consecutive World Cup matches, and just dismantled England with two assists in the last five minutes. It doesn't know that Argentina have won all five World Cup penalty shootouts they've contested in the Messi era's back half, or that Emiliano Martínez turns shootouts into theatre. It treats Argentina's three comebacks as luck to be regressed, not evidence of the deepest reservoir of belief in world football. Every one of those things is real, and none of them fits in a Poisson distribution. If Argentina win on Sunday, it won't be because the model was wrong, exactly. It will be because football keeps a category the model doesn't: the things that only happen to teams that refuse to lose.</p>
+
+    <p>But a forecast has to pick, and mine picks the metronome. Spain by a goal, probably 1-0, possibly after a very long and very tense afternoon. <span class="kicker">Written down on Thursday. Sunday can laugh at it.</span></p>
+  </article>
+
+  <section class="refs">
+    <div class="figtab"></div>
+    <h2 class="refhead">How the forecast is built</h2>
+    <p class="refintro">One probability, assembled from two independent estimates of the same thing: how many goals each team should expect to score against the other. Everything below is reproducible from public data.</p>
+    <div class="idxbox">
+      <div class="idxlab">The model</div>
+      <div class="idxeq">&lambda;<sub>team</sub> = &frac12;&middot;&lambda;<sub>Elo</sub> + &frac12;&middot;&lambda;<sub>xG</sub> &nbsp;&plusmn;&nbsp; fatigue&nbsp;&nbsp;&rarr;&nbsp;&nbsp; Poisson scoreline grid &rarr; 90&prime; &rarr; extra time &rarr; penalties</div>
+      <div class="idxkey">&lambda; is each team's expected goals in the final. The Elo half converts the ratings gap into goal expectations; the xG half converts each team's tournament chance-creation into the same currency, adjusted for schedule and shrunk toward the mean. The two halves are averaged, a small fatigue term shifts 0.08 goals from Argentina to Spain, and a Poisson grid turns the two &lambda;s into probabilities for every scoreline. Draws are replayed over 30 minutes of extra time at the same scoring rates; matches still level go to penalties at 50-50.</div>
+    </div>
+    <dl class="reflist">
+      <dt>The Elo half</dt>
+      <dd>Elo ratings (eloratings.net, July 15): Spain 2,232, Argentina 2,177. On neutral ground a 55-point gap converts to an expected score of 0.578 for Spain. I then solve for the pair of Poisson goal-rates, totalling 2.4 goals (a typical final), that reproduces exactly that expected score. <span class="eg">Result: Spain 1.36, Argentina 1.04 expected goals. Elo alone, carried through extra time and penalties, makes Spain a 58.8% favourite for the trophy.</span></dd>
+      <dt>The xG half</dt>
+      <dd>Each team's chances created and conceded per 90 minutes across all seven matches (Argentina's two extra-time matches count as 120 minutes). Raw rates: Argentina 1.93 created, 0.53 conceded; Spain 1.94 created, 0.31 conceded. Three corrections follow. First, schedule: Spain's average opponent was rated about 75 Elo points stronger (their knockout run was Austria, Portugal, Belgium, France against Argentina's Cape Verde, Egypt, Switzerland, England), so both teams' rates are re-based to a common opponent. Second, shrinkage: seven matches is a small sample, so rates are pulled 30% of the way toward the tournament average, which tempers Spain's historically extreme defensive numbers. Third, the two adjusted profiles are multiplied against each other, attack against defence. <span class="eg">Result: Spain 1.19, Argentina 0.68 expected goals. The xG half alone would make Spain a 65.5% favourite.</span></dd>
+      <dt>Fatigue</dt>
+      <dd>Argentina have played 60 more minutes and rest one day fewer. Research on rest effects in tournament football finds real but small penalties, so this term moves just 0.08 goals of expectation from Argentina to Spain. <span class="eg">Removing it entirely gives Spain 62.1%; doubling it gives 66.5%. It is not what decides this forecast.</span></dd>
+      <dt>Extra time and penalties</dt>
+      <dd>If the 90-minute grid lands on a draw (28% chance), the model replays a 30-minute Poisson at the same per-minute rates. Draws that survive extra time (16% of all outcomes) go to penalties, scored as a 50-50 coin flip. Argentina's shootout record under Emiliano Martínez is famous, but academic work finds no reliably persistent team edge in shootouts, so I resisted the temptation. <span class="eg">Giving Argentina a 55-45 shootout edge would only move the headline from 64.3% to 63.5%.</span></dd>
+      <dt>What the model ignores, on purpose</dt>
+      <dd>Messi's form, Argentina's comeback streak, crowd composition at MetLife, referee tendencies, and every narrative in between. Some of these are real forces. None can be measured well enough to earn a coefficient, and a forecast that quietly nudges its numbers toward the story it likes isn't a forecast, it's a preference with decimals.</dd>
+    </dl>
+    <h3 class="reftabhead">Every match, both finalists</h3>
+    <div class="tabnote">Chances created (xG) and conceded (xGA) in each match at this World Cup. aet: match went to extra time, xG totals cover 120 minutes.</div>
+    <div class="tabwrap"><table class="dtab" id="dtab"></table></div>
+    <h3 class="reftabhead">Sensitivity</h3>
+    <div class="tabnote">Spain's trophy probability under different assumptions. The forecast is stable: every reasonable setting lands between 62% and 67%.</div>
+    <div class="tabwrap"><table class="dtab" id="senstab"></table></div>
+    <p class="refnote">Elo ratings from eloratings.net as of July 15, 2026 (via footballratings.org). Ratings for seven group-stage and early-knockout opponents (Uruguay, Austria, Egypt, Algeria, Cape Verde, Jordan, Saudi Arabia) were not on the fetched page and are approximated from recent published values; they enter only through the schedule adjustment, where an error of 60 points moves the headline by under half a point. Match xG from RealGM's tournament tracker (Stats Perform data); the two semifinals from Opta via ESPN. Different xG providers differ slightly on any given match; no single-match difference changes the story. Blend weight (50-50), total-goals baseline (2.4), shrinkage (30%) and the fatigue term are judgment calls, each tested in the sensitivity table. The model was locked and this article written on July 16, three days before the final. All calculations are my own.</p>
+  </section>
+</div>
+
+<script>
+const D = {"elo": {"esp": 2232, "arg": 2177, "dr": 55, "we": 0.5785}, "rates": {"argAtk": 1.93, "argDef": 0.53, "espAtk": 1.94, "espDef": 0.31}, "ratesAdj": {"argAtk": 1.65, "argDef": 0.82, "espAtk": 1.81, "espDef": 0.52}, "lamElo": {"esp": 1.36, "arg": 1.04}, "lamXg": {"esp": 1.19, "arg": 0.68}, "lam": {"esp": 1.32, "arg": 0.82}, "p90": {"esp": 0.4835, "draw": 0.2842, "arg": 0.2323}, "paths": {"esp": [0.4835, 0.0813, 0.0783], "arg": [0.2323, 0.0463, 0.0783]}, "total": {"esp": 0.6431, "arg": 0.3569}, "pet": 0.2842, "ppens": 0.1566, "grid": [[0.1181, 0.0967, 0.0396, 0.0108, 0.0022, 0.0004], [0.1556, 0.1274, 0.0522, 0.0142, 0.0029, 0.0005], [0.1025, 0.0839, 0.0344, 0.0094, 0.0019, 0.0003], [0.045, 0.0369, 0.0151, 0.0041, 0.0008, 0.0001], [0.0148, 0.0121, 0.005, 0.0014, 0.0003, 0.0], [0.0039, 0.0032, 0.0013, 0.0004, 0.0001, 0.0]], "sched": {"oppA": 1756, "oppS": 1831}, "matches": {"arg": [["Algeria", 1.23, 0.31, "W 3-0"], ["Austria", 2.62, 0.5, "W 2-0"], ["Jordan", 2.13, 0.76, "W 3-1"], ["Cape Verde", 2.16, 0.45, "W 3-2 aet"], ["Egypt", 2.8, 0.98, "W 3-2"], ["Switzerland", 2.0, 0.53, "W 3-1 aet"], ["England", 1.84, 0.53, "W 2-1"]], "esp": [["Cape Verde", 2.29, 0.3, "D 0-0"], ["Saudi Arabia", 2.3, 0.15, "W 4-0"], ["Uruguay", 0.86, 0.2, "W 1-0"], ["Austria", 2.8, 0.29, "W 3-0"], ["Portugal", 1.77, 0.6, "W 1-0"], ["Belgium", 1.96, 0.34, "W 2-1"], ["France", 1.63, 0.3, "W 2-0"]]}, "waterfall": {"start": 0.5, "elo": 0.5877, "blend": 0.6197, "final": 0.6431, "xg": 0.6554}};
+const CSS=getComputedStyle(document.documentElement);
+const ESP=CSS.getPropertyValue("--esp").trim(), ARG=CSS.getPropertyValue("--arg").trim();
+const HAIR=CSS.getPropertyValue("--hair").trim(), GREY=CSS.getPropertyValue("--grey").trim();
+const INK=CSS.getPropertyValue("--ink").trim();
+
+/* ---------- headline split bar ---------- */
+(function(){
+  const box=document.getElementById("headline");
+  const pe=D.total.esp*100, pa=D.total.arg*100;
+  const segsE=D.paths.esp.map(x=>x*100), segsA=D.paths.arg.map(x=>x*100);
+  const alphas=[1,0.72,0.45];
+  let segs='';
+  segsE.forEach((w,i)=>{segs+='<div class="seg" style="width:'+w+'%;background:'+ESP+';opacity:'+alphas[i]+'"></div>';});
+  segsA.slice().reverse().forEach((w,i)=>{segs+='<div class="seg" style="width:'+w+'%;background:'+ARG+';opacity:'+alphas[2-i]+'"></div>';});
+  box.innerHTML=
+    '<div class="hbig">'+
+      '<div class="side"><div class="pct esp">'+pe.toFixed(0)+'%</div><div class="tm">Spain</div></div>'+
+      '<div class="side r"><div class="pct arg">'+pa.toFixed(0)+'%</div><div class="tm">Argentina</div></div>'+
+    '</div>'+
+    '<div class="splitbar">'+segs+'</div>'+
+    '<div class="seglegend">'+
+      '<span class="sl"><i class="sw" style="background:'+ESP+'"></i>win in 90&prime;</span>'+
+      '<span class="sl"><i class="sw" style="background:'+ESP+';opacity:.72"></i>win in extra time</span>'+
+      '<span class="sl"><i class="sw" style="background:'+ESP+';opacity:.45"></i>win on penalties</span>'+
+      '<span class="sl" style="margin-left:8px;color:var(--grey)">same shades in blue for Argentina</span>'+
+    '</div>';
+})();
+
+/* ---------- routes: per-match xG bars ---------- */
+(function(){
+  const box=document.getElementById("routes");
+  const MAX=3.0;
+  const badges={'Cape Verde-arg':'aet','Switzerland-arg':'aet','Egypt-arg':'cb','England-arg':'cb'};
+  function panel(name,color,tint,ms,side){
+    let h='<div class="route"><h4 style="color:'+color+'">'+name+'</h4><div class="sub">group stage &rarr; final four</div>';
+    ms.forEach(m=>{
+      const opp=m[0],xf=m[1],xa=m[2],res=m[3];
+      let bdg='';
+      if(res.indexOf('aet')>=0) bdg='<span class="badge aet">aet</span>';
+      if(side==='arg'&&(opp==='Egypt'||opp==='England')) bdg+='<span class="badge cb">comeback</span>';
+      h+='<div class="mrow"><div class="mtop"><span class="opp">'+opp+bdg+'</span><span class="res">'+res+'</span></div>'+
+        '<div class="xgbars">'+
+        '<div class="xgtrack"><div class="xgfill" style="width:'+(100*xf/MAX)+'%;background:'+color+'"></div><span class="xgval">'+xf.toFixed(1)+'</span></div>'+
+        '<div class="xgtrack"><div class="xgfill" style="width:'+(100*xa/MAX)+'%;background:'+color+';opacity:.28"></div><span class="xgval">'+xa.toFixed(1)+'</span></div>'+
+        '</div></div>';
+    });
+    return h+'</div>';
+  }
+  box.innerHTML=panel('Spain',ESP,'',D.matches.esp,'esp')+panel('Argentina',ARG,'',D.matches.arg,'arg');
+})();
+
+/* ---------- waterfall ---------- */
+(function(){
+  const svg=document.getElementById("waterfall");
+  const NS="http://www.w3.org/2000/svg";
+  function E(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+  function T(x,y,s,cls,anchor,fill){const e=E("text",{x,y,class:cls||"lab","text-anchor":anchor||"middle"});if(fill)e.setAttribute("fill",fill);e.textContent=s;return e;}
+  const steps=[["Neutral start",50.0],["+ Elo gap",D.waterfall.elo*100],["+ tournament form (xG)",D.waterfall.blend*100],["+ fatigue",D.waterfall.final*100]];
+  const W=700,H=240,L=50,R=20,Tm=24,Bm=44,pw=W-L-R,ph=H-Tm-Bm;
+  const y0=45,y1=70;
+  const Y=v=>Tm+(1-(v-y0)/(y1-y0))*ph;
+  [50,55,60,65,70].forEach(v=>{
+    svg.appendChild(E("line",{x1:L,y1:Y(v),x2:L+pw,y2:Y(v),stroke:HAIR}));
+    svg.appendChild(T(L-8,Y(v)+3.5,v+"%","lab","end"));
+  });
+  const bw=pw/steps.length*0.52;
+  steps.forEach((s,i)=>{
+    const x=L+pw*(i+0.5)/steps.length-bw/2;
+    const prev=i===0?50:steps[i-1][1];
+    const yTop=Y(Math.max(prev,s[1])), yBot=Y(Math.min(prev,s[1]));
+    if(i===0){
+      svg.appendChild(E("rect",{x,y:Y(50),width:bw,height:2.5,fill:GREY}));
+    } else {
+      svg.appendChild(E("rect",{x,y:yTop,width:bw,height:Math.max(3,yBot-yTop),fill:ESP,rx:2,"fill-opacity":0.35+0.2*i}));
+      svg.appendChild(E("line",{x1:x-pw/steps.length*0.48+bw/2,y1:Y(prev),x2:x,y2:Y(prev),stroke:GREY,"stroke-dasharray":"3 3"}));
+    }
+    svg.appendChild(T(x+bw/2,Y(s[1])-8,s[1].toFixed(1)+"%","anno","middle",i===steps.length-1?ESP:INK));
+    svg.appendChild(T(x+bw/2,Tm+ph+16,s[0],"lab","middle"));
+  });
+  svg.appendChild(T(L+pw-2,Y(steps[3][1])-24,"Spain's trophy probability","anno","end",ESP));
+})();
+
+/* ---------- scoreline heatmap ---------- */
+(function(){
+  const box=document.getElementById("heat");
+  const g=D.grid, N=5;
+  let maxp=0; for(let i=0;i<=N;i++)for(let j=0;j<=N;j++)maxp=Math.max(maxp,g[i][j]);
+  let h='<div class="cell hdr"></div>';
+  for(let j=0;j<=N;j++)h+='<div class="cell hdr">'+j+'</div>';
+  for(let i=0;i<=N;i++){
+    h+='<div class="cell hdr">'+i+'</div>';
+    for(let j=0;j<=N;j++){
+      const p=g[i][j], a=Math.pow(p/maxp,0.7);
+      const col=i>j?ESP:(j>i?ARG:INK);
+      const dark=a>0.55;
+      h+='<div class="cell" style="background:'+hex2rgba(col,0.08+a*0.72)+';color:'+(dark?'#F4EFE2':'#221F1A')+'">'+
+        (p>=0.02?('<span>'+i+'-'+j+'</span><span class="p">'+(p*100).toFixed(0)+'%</span>'):'')+'</div>';
+    }
+  }
+  box.innerHTML=h;
+  function hex2rgba(hx,a){const n=parseInt(hx.slice(1),16);return 'rgba('+(n>>16)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
+  document.getElementById("heatlab").textContent=
+    "Red cells: Spain wins. Blue cells: Argentina wins. Diagonal: draws, on to extra time. Most likely: 1-0 Spain ("+(g[1][0]*100).toFixed(0)+"%).";
+})();
+
+/* ---------- data table ---------- */
+(function(){
+  const t=document.getElementById("dtab");
+  let h='<thead><tr><th class="l">Team</th><th class="l">Opponent</th><th>Result</th><th>xG</th><th>xGA</th></tr></thead><tbody>';
+  D.matches.esp.forEach(m=>{h+='<tr class="esp"><td class="l">Spain</td><td class="l" style="color:var(--ink);font-weight:400">'+m[0]+'</td><td>'+m[3]+'</td><td>'+m[1].toFixed(2)+'</td><td>'+m[2].toFixed(2)+'</td></tr>';});
+  D.matches.arg.forEach(m=>{h+='<tr class="arg"><td class="l">Argentina</td><td class="l" style="color:var(--ink);font-weight:400">'+m[0]+'</td><td>'+m[3]+'</td><td>'+m[1].toFixed(2)+'</td><td>'+m[2].toFixed(2)+'</td></tr>';});
+  t.innerHTML=h+'</tbody>';
+})();
+
+/* ---------- sensitivity table ---------- */
+(function(){
+  const t=document.getElementById("senstab");
+  const rows=[
+    ["Blend weight on Elo","30% / 50% / 70%","65.7 / 64.3 / 63.0"],
+    ["Fatigue term (goals)","0 / 0.08 / 0.16","62.1 / 64.3 / 66.5"],
+    ["Penalty shootout, Spain","45% / 50% / 55%","63.5 / 64.3 / 65.1"],
+    ["Rate shrinkage","40% / 30% / 20%","63.0 / 64.3 / 65.7"],
+    ["Approx. opponent Elo","-60 / 0 / +60","64.6 / 64.3 / 64.1"]
+  ];
+  let h='<thead><tr><th class="l">Assumption varied</th><th class="l">Settings</th><th class="l">Spain trophy %</th></tr></thead><tbody>';
+  rows.forEach(r=>{h+='<tr><td class="l">'+r[0]+'</td><td class="l" style="color:var(--grey)">'+r[1]+'</td><td class="l">'+r[2]+'</td></tr>';});
+  t.innerHTML=h+'</tbody>';
+})();
+
+/* ---------- reveal ---------- */
+(function(){
+  const els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)||matchMedia("(prefers-reduced-motion: reduce)").matches){
+    els.forEach(e=>e.classList.add('in'));return;
+  }
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.15});
+  els.forEach(e=>io.observe(e));
+})();
+</script>
+</body>
+</html>
