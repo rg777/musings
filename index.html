@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Musings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500;1,9..144,600&family=Karla:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDE6D6;
+    --paper-deep:#E3DAC5;
+    --card:#F4EFE2;
+    --ink:#221F1A;
+    --ink-soft:#6B6455;
+    --pen:#33507A;
+    --stamp:#B5533C;
+    --line:#CBBFA0;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(34,31,26,0.05) 1px, transparent 0);
+    background-size:22px 22px;
+    color:var(--ink);
+    font-family:'Karla',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  .wrap{max-width:700px;margin:0 auto;padding:64px 24px 120px}
+
+  /* ---------- header ---------- */
+  header{margin-bottom:64px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand svg{flex:none}
+  h1.site{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:44px;
+    letter-spacing:-0.01em;
+    margin:0;
+    line-height:1;
+  }
+  .squiggle{display:block;width:210px;height:14px;margin:10px 0 18px 2px}
+  .tagline{
+    font-size:16px;
+    color:var(--ink-soft);
+    max-width:46ch;
+    line-height:1.5;
+    margin:0;
+  }
+
+  /* ---------- timeline ---------- */
+  .timeline{position:relative;margin-top:8px}
+  .spine{
+    position:absolute;
+    left:15px;
+    top:6px;
+    bottom:6px;
+    width:2px;
+    background:repeating-linear-gradient(to bottom, var(--line) 0 6px, transparent 6px 12px);
+  }
+  .entry{position:relative;padding-left:56px;margin-bottom:56px}
+  .entry:last-child{margin-bottom:0}
+  .node{
+    position:absolute;left:8px;top:6px;
+    width:16px;height:16px;border-radius:50%;
+    background:var(--paper);
+    border:2px solid var(--line);
+  }
+  .entry.live .node{border-color:var(--pen);background:var(--pen)}
+  .entry.live .spine-seg{background:var(--pen)}
+
+  .when{
+    font-family:'Caveat',cursive;
+    font-size:22px;
+    font-weight:600;
+    color:var(--pen);
+    display:inline-block;
+    transform:rotate(-2deg);
+    margin:0 0 10px;
+  }
+  .entry.draft .when{color:var(--ink-soft)}
+
+  .card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:18px 20px 20px;
+    display:flex;
+    gap:18px;
+    align-items:flex-start;
+    text-decoration:none;
+    color:var(--ink);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  a.card{cursor:pointer}
+  a.card:hover{transform:translateY(-3px) rotate(-0.3deg);box-shadow:5px 7px 0 rgba(34,31,26,0.08)}
+  a.card:focus-visible{outline:2px solid var(--pen);outline-offset:3px}
+  .entry.draft .card{
+    border-style:dashed;
+    opacity:.72;
+  }
+
+  .tape{
+    position:absolute;top:-9px;left:26px;
+    width:64px;height:20px;
+    background:rgba(181,83,60,0.35);
+    transform:rotate(-3deg);
+  }
+
+  .thumb{
+    flex:none;width:76px;height:76px;
+    background:var(--paper-deep);
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .thumb svg{width:44px;height:44px}
+
+  .body-col{min-width:0}
+  h2.title{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:21px;
+    margin:0 0 6px;
+    line-height:1.25;
+  }
+  p.excerpt{
+    font-size:14.5px;
+    color:var(--ink-soft);
+    line-height:1.55;
+    margin:0;
+  }
+  .stamp{
+    position:absolute; right:14px; top:14px;
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:15px;
+    color:var(--stamp);
+    border:2px solid var(--stamp);
+    border-radius:3px;
+    padding:1px 8px;
+    transform:rotate(7deg);
+    opacity:.85;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+  }
+  .readmark{
+    font-family:'Karla',sans-serif;
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--pen);
+    letter-spacing:.02em;
+    margin-top:9px;
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+  }
+  .readmark svg{width:12px;height:12px}
+  a.card:hover .readmark{text-decoration:underline}
+
+  footer{
+    margin-top:70px;
+    padding-top:22px;
+    border-top:1px dashed var(--line);
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease, transform .5s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    a.card{transition:none}
+  }
+  @media (max-width:480px){
+    h1.site{font-size:34px}
+    .entry{padding-left:44px}
+    .card{flex-direction:column}
+    .thumb{width:56px;height:56px}
+    .thumb svg{width:32px;height:32px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <path d="M6 27 C6 12, 12 5, 27 6" stroke="#33507A" stroke-width="2" stroke-linecap="round"/>
+        <path d="M27 6 L27 12 M27 6 L21 7.5" stroke="#33507A" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="9" cy="24" r="1.6" fill="#B5533C"/>
+      </svg>
+      <h1 class="site">Random Musings</h1>
+    </div>
+    <svg class="squiggle" viewBox="0 0 210 14" fill="none">
+      <path d="M2 8 C 20 2, 35 2, 52 8 S 85 14, 102 8 S 135 2, 152 8 S 185 14, 202 8"
+        stroke="#B5533C" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+    </svg>
+    <p class="tagline">Occasional dispatches on sport, numbers, and whatever else I can't stop turning over. Filed here roughly as they happen.</p>
+  </header>
+
+  <div class="timeline">
+    <div class="spine"></div>
+
+    <!-- Aug 2026: draft, future -->
+    <div class="entry draft reveal">
+      <div class="node"></div>
+      <span class="when">Coming up</span>
+      <div class="card" tabindex="-1" aria-disabled="true">
+        <span class="stamp">Soon</span>
+        <div class="thumb">
+          <svg viewBox="0 0 48 48" fill="none">
+            <path d="M24 8v14 M17 22h14 M24 22c-9 0-16 6-16 14h32c0-8-7-14-16-14z" stroke="#6B6455" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="body-col">
+          <h2 class="title">The queue nobody admits they're in</h2>
+          <p class="excerpt">Why the line at passport control feels longer than the maths says it should. Still gathering the data.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 13 July 2026: the real, live article -->
+    <div class="entry live reveal">
+      <div class="node"></div>
+      <span class="when">13 July 2026</span>
+      <a class="card" href="advantage-history.html">
+        <div class="tape"></div>
+        <div class="thumb">
+          <svg viewBox="0 0 48 48" fill="none">
+            <circle cx="22" cy="20" r="10" stroke="#33507A" stroke-width="2"/>
+            <path d="M13 13c3 3 3 11 0 14 M31 13c-3 3-3 11 0 14" stroke="#33507A" stroke-width="1.4"/>
+            <path d="M33 30 L44 41 M44 41l-2 2M44 41l2-2" stroke="#B5533C" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="body-col">
+          <h2 class="title">All hold, no jeopardy</h2>
+          <p class="excerpt">Sinner's serve was never broken at Wimbledon. A win-probability needle explains why the final felt calmer than the scoreline let on.</p>
+          <span class="readmark">Read the piece
+            <svg viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </a>
+    </div>
+
+    <!-- June 2026: draft -->
+    <div class="entry draft reveal">
+      <div class="node"></div>
+      <span class="when">June 2026</span>
+      <div class="card" tabindex="-1" aria-disabled="true">
+        <span class="stamp">Draft</span>
+        <div class="thumb">
+          <svg viewBox="0 0 48 48" fill="none">
+            <rect x="8" y="14" width="32" height="22" rx="2" stroke="#6B6455" stroke-width="2"/>
+            <circle cx="24" cy="25" r="6" stroke="#6B6455" stroke-width="2"/>
+            <rect x="17" y="9" width="8" height="5" rx="1" stroke="#6B6455" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="body-col">
+          <h2 class="title">Why I still shoot on film</h2>
+          <p class="excerpt">A half-argued case for the roll of Portra sitting in the fridge. Not ready to defend this one yet.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- May 2026: draft -->
+    <div class="entry draft reveal">
+      <div class="node"></div>
+      <span class="when">May 2026</span>
+      <div class="card" tabindex="-1" aria-disabled="true">
+        <span class="stamp">Draft</span>
+        <div class="thumb">
+          <svg viewBox="0 0 48 48" fill="none">
+            <path d="M14 20h16v10a8 8 0 01-16 0z" stroke="#6B6455" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M30 22h3a4 4 0 010 8h-3" stroke="#6B6455" stroke-width="2"/>
+            <path d="M18 14c0-2 2-2 2-4 M24 14c0-2 2-2 2-4" stroke="#6B6455" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="body-col">
+          <h2 class="title">The office coffee ring, a short history</h2>
+          <p class="excerpt">Every desk has one. Some notes on why nobody ever quite manages to use a coaster.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>Written and coded by hand. New entries appear at the top as they're finished.</footer>
+
+</div>
+
+<script>
+  const els=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:0.15});
+    els.forEach(el=>io.observe(el));
+  } else {
+    els.forEach(el=>el.classList.add('in'));
+  }
+</script>
+</body>
+</html>
