@@ -3,125 +3,112 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>All hold, no jeopardy · Game theory</title>
+<title>All hold, no jeopardy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Karla:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#F4EFE4;        /* warm ivory */
-    --ink:#1A1714;
-    --ink-soft:#453F38;
-    --grey:#8B8377;
-    --hair:#E2DACB;
-    --accent:#0C6B60;       /* petrol teal: the champion, above 50% */
-    --accent-tint:rgba(12,107,96,0.13);
-    --deficit:#AA4E2C;      /* burnt clay: the deficit, below 50% */
-    --deficit-tint:rgba(170,78,44,0.13);
-    --mid:#CFC6B4;
-    --divider:#D6CDBB;
+    --paper:#EDE6D6;
+    --card:#F4EFE2;
+    --ink:#221F1A;
+    --ink-soft:#6B6455;
+    --grey:#8C8573;
+    --hair:#DCD3BE;
+    --accent:#33507A;
+    --accent-tint:rgba(51,80,122,0.12);
+    --deficit:#B5533C;
+    --deficit-tint:rgba(181,83,60,0.12);
+    --mid:#CBBFA0;
+    --divider:#D9D0BC;
   }
   *{box-sizing:border-box}
   html{-webkit-text-size-adjust:100%}
   body{
     margin:0;background:var(--paper);color:var(--ink);
-    font-family:"Source Serif 4",Georgia,serif;
-    font-size:19px;line-height:1.62;
+    font-family:"Karla",Arial,sans-serif;
+    font-size:18px;line-height:1.72;
     -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
   }
-  .wrap{max-width:980px;margin:0 auto;padding:52px 30px 96px}
-  .sans{font-family:"Libre Franklin",Arial,sans-serif}
+  .wrap{max-width:700px;margin:0 auto;padding:56px 24px 100px}
+  .sans{font-family:"Karla",Arial,sans-serif}
+  .serif{font-family:"Fraunces",Georgia,serif}
 
-  /* masthead / lede (full width, headline kept to a readable measure) */
-  header.lede{max-width:780px;margin-bottom:6px}
-  .mast{display:flex;align-items:center;gap:12px;margin-bottom:30px}
-  .flag{width:15px;height:34px;background:var(--accent);display:block;flex:0 0 auto}
-  .eyebrow{font-family:"Libre Franklin",sans-serif;font-weight:700;
-    text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--accent)}
-  .eyebrow span{color:var(--ink);font-weight:600;margin-left:2px}
+  header.lede{margin-bottom:8px}
+  .back{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;
+    color:var(--ink-soft);text-decoration:none;margin-bottom:22px}
+  .back:hover{color:var(--accent)}
+  .back svg{width:13px;height:13px}
 
-  h1{font-weight:700;font-size:54px;line-height:1.02;letter-spacing:-0.018em;
-    margin:0 0 16px;max-width:22ch}
-  .deck{font-style:italic;font-size:21px;line-height:1.45;color:var(--ink-soft);
-    margin:0 0 26px;max-width:50ch}
-  .rule{border:0;border-top:1px solid var(--ink);margin:0 0 8px}
-  .meta{font-family:"Libre Franklin",sans-serif;font-size:12px;letter-spacing:.06em;
-    text-transform:uppercase;color:var(--grey);margin:0 0 26px}
+  h1{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:44px;line-height:1.08;
+    letter-spacing:-0.01em;margin:0 0 16px;max-width:20ch;color:var(--ink)}
+  .squiggle{display:block;width:150px;height:12px;margin:2px 0 20px}
+  .deck{font-size:19px;line-height:1.5;color:var(--ink-soft);margin:0 0 30px;max-width:52ch}
+  .meta{font-size:12.5px;letter-spacing:.03em;color:var(--grey);margin:0 0 30px}
 
-  /* two-column body */
-  .body2{column-count:2;column-gap:46px;column-fill:balance}
-  .body2 p{margin:0 0 20px;text-align:justify;hyphens:auto;orphans:2;widows:2}
-  .body2 > p:first-of-type::first-letter{
-    font-weight:700;font-size:66px;line-height:.80;float:left;
-    padding:8px 10px 0 0;color:var(--accent);
-  }
+  article p{margin:0 0 22px}
   em{font-style:italic}
-  .kicker::after{content:"\00A0\25AA";color:var(--accent)}
+  .kicker{font-family:"Fraunces",Georgia,serif;font-style:italic;color:var(--accent)}
 
-  /* figures span both columns */
-  figure{margin:36px auto;max-width:860px;break-inside:avoid}
-  .body2 > figure{column-span:all}
+  figure{margin:40px 0;break-inside:avoid}
 
-  /* index formula callout */
-  .body2 > .idxbox{column-span:all}
-  .idxbox{max-width:660px;margin:30px auto;padding:16px 22px 15px;
+  .idxbox{margin:28px 0;padding:16px 20px 15px;
     border:1px solid var(--divider);border-left:3px solid var(--accent);
-    background:rgba(12,107,96,0.045);border-radius:4px;break-inside:avoid}
-  .idxbox .idxlab{font-family:"Libre Franklin",sans-serif;font-weight:700;font-size:11px;
-    letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:9px}
-  .idxbox .idxeq{font-family:"Source Serif 4",Georgia,serif;font-weight:600;
-    font-size:18px;line-height:1.55;color:var(--ink)}
+    background:var(--card);border-radius:6px;break-inside:avoid}
+  .idxbox .idxlab{font-family:"Karla",sans-serif;font-weight:700;font-size:11px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:9px}
+  .idxbox .idxeq{font-family:"Fraunces",Georgia,serif;font-weight:600;
+    font-size:17px;line-height:1.55;color:var(--ink)}
   .idxbox .idxeq b{color:var(--accent);font-weight:700}
-  .idxbox .idxkey{font-family:"Libre Franklin",sans-serif;font-size:12px;color:var(--grey);
-    margin-top:9px;line-height:1.5}
+  .idxbox .idxkey{font-family:"Karla",sans-serif;font-size:13px;color:var(--ink-soft);
+    margin-top:9px;line-height:1.55}
 
-  /* reference / methodology section */
-  .refs{max-width:820px;margin:58px auto 0;padding-top:10px;border-top:2px solid var(--ink)}
+  .refs{margin:60px 0 0;padding-top:14px;border-top:2px dashed var(--divider)}
   .refs .figtab{margin-top:6px}
-  .refs .refhead{font-family:"Libre Franklin",sans-serif;font-weight:700;font-size:23px;
-    letter-spacing:-0.012em;color:var(--ink);margin:12px 0 6px}
-  .refs .refintro{font-size:16px;line-height:1.55;color:var(--ink-soft);margin:0 0 16px}
+  .refs .refhead{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:26px;
+    letter-spacing:-0.01em;color:var(--ink);margin:12px 0 8px}
+  .refs .refintro{font-size:16px;line-height:1.6;color:var(--ink-soft);margin:0 0 18px}
   .reflist{margin:6px 0 0}
-  .reflist dt{font-family:"Libre Franklin",sans-serif;font-weight:700;font-size:13.5px;
-    color:var(--accent);margin:18px 0 4px}
-  .reflist dd{margin:0;font-size:16px;line-height:1.56;color:var(--ink)}
-  .reflist dd .eg{color:var(--grey);font-style:italic}
-  .refnote{font-family:"Libre Franklin",sans-serif;font-size:12.5px;color:var(--grey);
-    line-height:1.55;margin:24px 0 0;padding-top:14px;border-top:1px solid var(--divider)}
-  .reftabhead{font-family:"Libre Franklin",sans-serif;font-weight:700;font-size:16px;
-    color:var(--ink);margin:26px 0 3px}
-  .tabnote{font-family:"Libre Franklin",sans-serif;font-size:12px;color:var(--grey);margin:0 0 10px;line-height:1.5}
+  .reflist dt{font-family:"Karla",sans-serif;font-weight:700;font-size:13.5px;
+    color:var(--accent);margin:20px 0 5px}
+  .reflist dd{margin:0;font-size:16px;line-height:1.6;color:var(--ink)}
+  .reflist dd .eg{color:var(--ink-soft);font-style:italic}
+  .refnote{font-family:"Karla",sans-serif;font-size:13px;color:var(--ink-soft);
+    line-height:1.6;margin:26px 0 0;padding-top:16px;border-top:1px solid var(--divider)}
+  .reftabhead{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:19px;
+    color:var(--ink);margin:28px 0 4px}
+  .tabnote{font-family:"Karla",sans-serif;font-size:13px;color:var(--ink-soft);margin:0 0 12px;line-height:1.55}
   .tabwrap{overflow-x:auto}
-  .mqitab{border-collapse:collapse;width:100%;font-family:"Libre Franklin",sans-serif;font-size:13px}
-  .mqitab th,.mqitab td{padding:6px 8px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--divider)}
-  .mqitab th{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--grey);font-weight:700;border-bottom:1.5px solid var(--ink)}
+  .mqitab{border-collapse:collapse;width:100%;font-family:"Karla",sans-serif;font-size:13px}
+  .mqitab th,.mqitab td{padding:7px 8px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--divider)}
+  .mqitab th{font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:var(--grey);font-weight:700;border-bottom:1.5px solid var(--ink)}
   .mqitab td.l,.mqitab th.l{text-align:left}
   .mqitab td.mqi{font-weight:700;color:var(--ink)}
-  .mqitab tr.hi td{background:rgba(12,107,96,0.09)}
+  .mqitab tr.hi td{background:var(--accent-tint)}
   .mqitab tr.hi td.mqi{color:var(--accent)}
   .mqitab td.num{font-variant-numeric:tabular-nums;color:var(--ink-soft)}
-  .mqitab .alt{color:var(--grey);background:rgba(26,23,20,0.022)}
+  .mqitab .alt{color:var(--grey);background:rgba(34,31,26,0.02)}
   .mqitab td.mqi.alt{font-weight:700;color:var(--ink-soft)}
-  .figtab{width:34px;height:3px;background:var(--accent);margin-bottom:12px}
-  .figtitle{font-family:"Libre Franklin",sans-serif;font-weight:700;font-size:20px;
-    letter-spacing:-0.01em;margin:0 0 3px;color:var(--ink)}
-  .figsub{font-family:"Libre Franklin",sans-serif;font-weight:400;font-size:13.5px;
-    color:var(--ink-soft);margin:0 0 16px;line-height:1.35}
-  .source{font-family:"Libre Franklin",sans-serif;font-size:11.5px;color:var(--grey);
+  .figtab{width:30px;height:3px;background:var(--accent);margin-bottom:12px;border-radius:2px}
+  .figtitle{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:22px;
+    letter-spacing:-0.005em;margin:0 0 4px;color:var(--ink)}
+  .figsub{font-family:"Karla",sans-serif;font-weight:400;font-size:14px;
+    color:var(--ink-soft);margin:0 0 16px;line-height:1.4}
+  .source{font-family:"Karla",sans-serif;font-size:12px;color:var(--grey);
     margin-top:12px;display:flex;align-items:center;gap:7px}
-  .source::before{content:"";width:7px;height:7px;background:var(--accent);flex:0 0 auto}
-  .foot{font-family:"Libre Franklin",sans-serif;font-size:11.5px;color:var(--grey);
+  .source::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex:0 0 auto}
+  .foot{font-family:"Karla",sans-serif;font-size:12px;color:var(--grey);
     margin-top:5px;font-style:normal}
   svg{display:block;width:100%;height:auto;overflow:visible}
-  .lab{font-family:"Libre Franklin",sans-serif;fill:var(--grey);font-size:11px}
-  .anno{font-family:"Libre Franklin",sans-serif;font-size:11.5px;font-weight:500}
+  .lab{font-family:"Karla",sans-serif;fill:var(--grey);font-size:11px}
+  .anno{font-family:"Karla",sans-serif;font-size:11.5px;font-weight:600}
 
   #fig2b{position:relative}
   .tl-tip{position:absolute;left:0;top:0;pointer-events:none;opacity:0;
-    transition:opacity .12s ease;background:var(--paper);border:1px solid var(--divider);
-    border-radius:7px;box-shadow:0 8px 24px rgba(26,23,20,.16);padding:9px 12px;
+    transition:opacity .12s ease;background:var(--card);border:1px solid var(--divider);
+    border-radius:8px;box-shadow:0 8px 24px rgba(34,31,26,.14);padding:9px 12px;
     min-width:150px;max-width:230px;z-index:6;transform:translate(-50%,calc(-100% - 14px));
-    font-family:"Libre Franklin",sans-serif}
+    font-family:"Karla",sans-serif}
   .tl-tip.on{opacity:1}
   .tl-tip .t-w{font-weight:700;font-size:13px;color:var(--ink);line-height:1.25}
   .tl-tip .t-w span{font-weight:400;color:var(--grey)}
@@ -133,48 +120,42 @@
 
   .sm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 16px}
   .sm{border-top:1px solid var(--hair);padding-top:10px}
-  .sm .rank{font-family:"Libre Franklin",sans-serif;font-size:11px;color:var(--grey);letter-spacing:.04em}
-  .sm .nm{font-family:"Libre Franklin",sans-serif;font-weight:700;font-size:13px;line-height:1.15;margin:2px 0 1px}
-  .sm .res{font-family:"Libre Franklin",sans-serif;font-size:11px;color:var(--ink-soft);margin-bottom:8px;min-height:26px}
-  .sm .score{font-weight:700;font-size:32px;line-height:1;margin-top:9px}
+  .sm .rank{font-family:"Karla",sans-serif;font-size:11px;color:var(--grey);letter-spacing:.03em}
+  .sm .nm{font-family:"Karla",sans-serif;font-weight:700;font-size:13px;line-height:1.15;margin:2px 0 1px}
+  .sm .res{font-family:"Karla",sans-serif;font-size:11px;color:var(--ink-soft);margin-bottom:8px;min-height:26px}
+  .sm .score{font-weight:700;font-size:30px;line-height:1;margin-top:9px;font-family:"Fraunces",Georgia,serif}
   .sm .score.lead{color:var(--accent)}
-  .sm .scorelab{font-family:"Libre Franklin",sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--grey)}
+  .sm .scorelab{font-family:"Karla",sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--grey)}
   .sm.hi{background:linear-gradient(180deg,var(--accent-tint),transparent 62%)}
 
   .bars{display:flex;flex-direction:column;gap:11px;margin-top:4px;max-width:640px}
-  .cmplegend{display:flex;gap:22px;flex-wrap:wrap;margin:6px 0 14px;font-family:"Libre Franklin",sans-serif;font-size:12px;color:var(--ink-soft)}
+  .cmplegend{display:flex;gap:22px;flex-wrap:wrap;margin:6px 0 14px;font-family:"Karla",sans-serif;font-size:12px;color:var(--ink-soft)}
   .cl-item{display:flex;align-items:center;gap:7px}
   .cl-sw{width:11px;height:11px;display:inline-block;border-radius:2px}
   .cl-sw.ink{background:var(--ink)}
   .cl-sw.acc{background:var(--accent)}
   .bar-group{margin-bottom:6px}
-  .bar-group .bar-name{font-family:"Libre Franklin",sans-serif;font-size:13px;font-weight:500;margin-bottom:5px}
+  .bar-group .bar-name{font-family:"Karla",sans-serif;font-size:13px;font-weight:600;margin-bottom:5px}
   .bar-group .bar-name small{display:block;color:var(--grey);font-weight:400;font-size:11px}
   .bar-pair{display:flex;flex-direction:column;gap:4px}
   .bar-pair .bar-row{display:grid;grid-template-columns:1fr 34px;align-items:center;gap:12px}
   .bar-row{display:grid;grid-template-columns:130px 1fr 34px;align-items:center;gap:12px}
-  .bar-name{font-family:"Libre Franklin",sans-serif;font-size:13px;font-weight:500}
+  .bar-name{font-family:"Karla",sans-serif;font-size:13px;font-weight:600}
   .bar-name small{display:block;color:var(--grey);font-weight:400;font-size:11px}
-  .track{height:14px;background:#EAE3D5;position:relative}
+  .track{height:14px;background:var(--hair);border-radius:3px;position:relative;overflow:hidden}
   .fill{height:100%;background:var(--ink)}
   .fill.red{background:var(--accent)}
-  .bar-val{font-family:"Libre Franklin",sans-serif;font-weight:700;font-size:14px;text-align:right}
+  .bar-val{font-family:"Karla",sans-serif;font-weight:700;font-size:14px;text-align:right}
   .verdict{display:flex;gap:28px;align-items:flex-end;margin-top:24px;
     border-top:1px solid var(--hair);padding-top:18px;flex-wrap:wrap}
-  .verdict .big{font-weight:700;font-size:56px;line-height:.9}
+  .verdict .big{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:52px;line-height:.9}
   .verdict .big.red{color:var(--accent)}
-  .verdict .vlab{font-family:"Libre Franklin",sans-serif;font-size:12px;color:var(--ink-soft);max-width:20ch;line-height:1.3}
-  .arrow{font-family:"Libre Franklin",sans-serif;color:var(--grey);font-size:30px;align-self:center;font-weight:300}
+  .verdict .vlab{font-family:"Karla",sans-serif;font-size:12.5px;color:var(--ink-soft);max-width:20ch;line-height:1.35}
+  .arrow{font-family:"Karla",sans-serif;color:var(--grey);font-size:26px;align-self:center;font-weight:300}
 
-  @media (max-width:900px){
-    .body2{column-count:1}
-    .wrap{max-width:680px;padding:42px 22px 80px}
-    figure{margin:32px 0}
-    h1{font-size:44px}
-  }
   @media (max-width:560px){
-    h1{font-size:34px;max-width:none}.deck{font-size:18px}
-    body{font-size:17.5px}
+    h1{font-size:32px;max-width:none}.deck{font-size:17px}
+    body{font-size:17px}
     .sm-grid{grid-template-columns:repeat(2,1fr)}
     .bar-row{grid-template-columns:104px 1fr 30px}
   }
@@ -190,66 +171,70 @@
 <body>
 <div class="wrap">
   <header class="lede">
-    <div class="mast">
-      <span class="flag" aria-hidden="true"></span>
-      <div class="eyebrow">Game theory <span>· Sport</span></div>
-    </div>
+    <a class="back" href="index.html">
+      <svg viewBox="0 0 12 12" fill="none"><path d="M10 6H2M5 2 1 6l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Random Musings
+    </a>
     <h1>All hold, no jeopardy</h1>
-    <p class="deck">Jannik Sinner’s serve was never broken at Wimbledon. A win-probability needle shows why the final was calmer than it looked: close score ≠ high drama</p>
-    <hr class="rule">
+    <svg class="squiggle" viewBox="0 0 150 12" fill="none">
+      <path d="M2 7 C 14 2, 24 2, 36 7 S 58 12, 70 7 S 92 2, 104 7 S 126 12, 138 7"
+        stroke="#B5533C" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    </svg>
+    <p class="deck">Jannik Sinner's serve was never broken at Wimbledon this year. But a close scoreline and a great final aren't the same thing, and a simple probability model shows why.</p>
+    <p class="meta">13 July 2026 &middot; a data dig, not a match report</p>
   </header>
 
-  <article class="body2">
-    <p>On the evening of July 12th 2026, Jannik Sinner hit a forehand that Alexander Zverev could not answer. The Italian sank to the Centre Court grass for the second July in a row. He had beaten the German 6-7, 7-6, 6-3, 6-4 to keep the title he won a year before. It was his fifth grand slam and his hundredth match won at the majors. But the applause was a shade cooler this time. Carlos Alcaraz, whose presence had made the 2025 final feel like an occasion, was nowhere near this one. The fortnight will not be filed among the vintage years. Yet the match wore the costume of a thriller: two opening sets settled in tie-breaks, and a champion who lost the first of them.</p>
+  <article>
+    <p>On the evening of July 12th 2026, Jannik Sinner hit a forehand that Alexander Zverev never got back. He sank to the grass at Centre Court for the second July running, having beaten Zverev 6-7, 7-6, 6-3, 6-4 to defend his Wimbledon title. It was his fifth grand slam, and his hundredth match won at the majors. But the cheers felt a notch quieter this time, and this fortnight won't go down as one of the great ones. Funny thing, though: on paper it looked like a thriller. Two of the first two sets went to tie-breaks, and Sinner lost the very first one.</p>
 
-    <p>Sport calls a match "great" long before anyone checks the claim. And the word actually means two different things. One is execution: how well the points were made, the rallies sustained, the ball struck clean. The other is drama: how close the contest was, and how wildly the advantage swung from one man to the other. These two need not go together. A flawless demolition can be beautiful and quite dead. A shank-strewn brawl can be thrilling and ugly. To judge a match honestly, you have to pull the two apart first.</p>
+    <p>We throw the word "great" around in sport long before anyone's actually checked it. And it usually means two different things at once. One is execution: how well the points were played, how long the rallies lasted, how clean the hitting was. The other is drama: how close the match was, and how wildly the momentum swung from one player to the other. Those two don't have to travel together. A flawless straight-sets win can be gorgeous and completely dead as a spectacle. A match full of shanks and double faults can still be gripping. If you want to judge a match honestly, you have to pull those two things apart first.</p>
 
-    <p>This article scores every final it examines on one match-quality index, out of 100. Five ingredients feed it: how well its points were built, how close it ran, how wildly the lead swung, how long the bodies held, and, over the lot as a multiplier, what was at stake.</p>
+    <p>So here's how this piece scores every final it looks at: one match-quality index, out of 100, built from five ingredients. How well the points were played. How close the match ran. How wildly the lead swung. How long the players' bodies held up. And, sitting over the top of all that as a multiplier, how much was actually at stake.</p>
 
     <div class="idxbox reveal">
-      <div class="idxlab">The match-quality index</div>
-      <div class="idxeq">MQI = ( 0.30&#183;Execution + 0.20&#183;Competitiveness + <b>0.30&#183;Drama</b> + 0.20&#183;Endurance ) &#215; Stakes</div>
-      <div class="idxkey">Each component is scored 0 to 100; stakes is a multiplier near 1. Drama carries the joint-heaviest weight, alongside execution, and is the least obvious to measure.</div>
+      <div class="idxlab">The formula</div>
+      <div class="idxeq">Index = ( 0.30&#183;Execution + 0.20&#183;Competitiveness + <b>0.30&#183;Drama</b> + 0.20&#183;Endurance ) &#215; Stakes</div>
+      <div class="idxkey">Each part is scored 0 to 100. Stakes is a multiplier, not a score, so it can only nudge the total up or down a bit. Drama and execution matter most, so they carry the biggest weight, and drama is the hardest of the four to actually measure.</div>
     </div>
 
-    <p>Four of the five ingredients are the ordinary currency of match reports. Drama, the swing of advantage, is the hard one to pin down, and doing that honestly is the point of this piece. Here is how: stop watching the players and watch a single needle instead. It shows the probability, recalculated after every point, that the eventual champion will lift the trophy. One rule matters most: assume the two men are otherwise evenly matched, each holding serve at the match's own average. That way the needle starts at even and moves only when the score does, never because of reputation. This is deliberate. A bookmaker would have opened with Mr Sinner a heavy favourite, but that measures the players, not the afternoon. Strip out the skill gap, and the needle registers nothing but what happened on court. A one-sided procession leaves it becalmed. A real comeback sends it plunging toward zero, then hauling back toward one. Add up the size of every move it makes, game by game, small shifts and violent ones alike. That total is drama, now given a number.</p>
+    <p>Four of these five are the normal stuff of any match report. Drama, the swing of momentum, is the tricky one to pin down, and that's really what this whole piece is about. Here's the trick: instead of watching the players, watch a single number. After every point, recalculate the odds that the eventual champion goes on to win the whole thing. One rule matters above all: pretend the two players are exactly evenly matched, both holding serve at the match's own average rate. That way the number starts at 50-50 and only moves because of what happens on court, never because of reputation. This is deliberate. Bookmakers would have made Sinner a big favourite before a ball was struck, but that measures the players, not the afternoon. Strip the skill gap out, and the line only reacts to what's actually happening in the match. A one-sided procession barely nudges it. A real comeback sends it plunging toward zero, then hauling itself back up. Add up how far that line moves, game by game, big swings and small ones alike, and you've got a number for drama.</p>
 
     <figure class="reveal" id="fig1">
       <div class="figtab"></div>
-      <div class="figtitle">The needle that would not wake</div>
-      <div class="figsub">Win probability for the champion, 2026 Wimbledon final, point by point</div>
+      <div class="figtitle">The needle that wouldn't wake</div>
+      <div class="figsub">Sinner's win probability, point by point, 2026 Wimbledon final</div>
       <svg id="hero" viewBox="0 0 720 300" aria-label="Sinner's win probability opens at 50%, dips to 28% after losing the first set, then climbs to 100% without ever trailing again."></svg>
-      <div class="foot">*Assuming evenly matched players, so the line responds only to the score</div>
-      <div class="source">Point-by-point via Wimbledon SlamTracker; author’s calculations</div>
+      <div class="foot">*Assuming both players are equally good, so the line only reacts to the score</div>
+      <div class="source">Point-by-point via Wimbledon SlamTracker; author's calculations</div>
     </figure>
 
-    <p>Set the needle loose on the 2026 final and, for all the tie-breaks, it hardly moves. Mr Sinner opened at 50%, sank to a low of 28% after he went a set down, and from the middle of the second set never trailed again. Two tie-break sets, and not one change of leader across nearly four hours. On a scale that runs from a routine afternoon to the sport's modern summits, the match earns a drama score of just 49 out of 100. That is one of the lowest scores here, despite the two tie-breaks, and a shade below Mr Sinner's own final a year earlier. The reason lies in the serve. Neither man was broken cheaply. Mr Sinner was not broken at all, and Mr Zverev managed only a single break point in the whole match. So each set simply rode the serve to 6-6 and fell into a tie-break. This is where the needle draws its sharpest distinction: between a match that is close and one that is volatile. Closeness is a small margin on the scoreboard. Volatility is the champion's win probability actually moving, and that only happens when a lead changes hands. Two men holding serve to 6-6 have settled nothing between them, so the needle barely stirs even while the score stays tight. A tie-break reached that way is a coin toss balanced on a stalemate, not a swing of fortune. This match was close. It was not volatile.</p>
+    <p>Let the needle loose on the 2026 final and, despite all those tie-breaks, it barely twitches. Sinner started at 50-50, dropped to a low of 28% after losing the first set, and from the middle of the second set on, never trailed again. Two tie-break sets, and not one single change of leader across nearly four hours of tennis. On a scale that runs from a routine afternoon to the sport's all-time classics, this match scores just 49 out of 100 for drama. That's one of the lowest scores in the whole table, tie-breaks and all, and a touch below Sinner's own final a year earlier. Here's why: neither man got broken cheaply. Sinner wasn't broken once, and Zverev only managed a single break point in the entire match. So every set simply rode the serve out to 6-6 and tipped into a tie-break. And this is exactly where the needle earns its keep: it can tell the difference between a match that's close and one that's actually volatile. Close just means the scoreboard margin was small. Volatile means the champion's win probability genuinely moved, and that only happens when someone's lead actually changes hands. Two players holding serve to 6-6 haven't settled anything between them, so the needle barely stirs even while the score stays tight. A tie-break reached that way is a coin flip balanced on a stalemate, not a real swing of fortune. This match was close. It wasn't volatile.</p>
 
-    <p>A sceptic might ask whether the needle would even recognise a classic. So test it on the ghosts. Show it the 2019 Wimbledon final, where Novak Djokovic saved two championship points against Roger Federer: it drops the eventual winner to an 8% whisper, then drags him back from the dead. Show it the same pair's Roland Garros final of 2025, five and a half hours long, where Mr Alcaraz erased three match points: it sends its winner down to a scarcely believable 5%. The needle is told nothing about reputation. Yet it ranks these two great escapes first and second, and sends each hero to the brink exactly where he stood in real life.</p>
+    <p>Fair question, though: would this needle even recognise a genuine classic if it saw one? Let's test it on two ghosts. Show it the 2019 Wimbledon final, where Djokovic saved two championship points against Federer: the needle drops Djokovic to an 8% long shot, then drags him back from the brink. Show it the same two players' French Open final from 2025, five and a half hours long, where Alcaraz wiped out three match points: it sends him down to a barely believable 5%. The needle knows nothing about reputation. And yet it ranks these two great escapes first and second, sending each eventual winner right to the edge, exactly where they actually stood.</p>
 
     <figure class="reveal" id="fig2">
       <div class="figtab"></div>
-      <div class="figtitle">A machine that knows its classics</div>
-      <div class="figsub">Champion’s win probability across six grand-slam finals, ranked by turbulence. Higher drama score, wilder ride</div>
+      <div class="figtitle">A machine that knows a classic when it sees one</div>
+      <div class="figsub">How the champion's win probability moved across six famous finals. Higher drama score, wilder ride</div>
       <div class="sm-grid" id="small"></div>
-      <div class="source">Tennis Abstract (Match Charting Project); 2026 via SlamTracker; author’s calculations</div>
+      <div class="source">Tennis Abstract (Match Charting Project); 2026 via SlamTracker; author's calculations</div>
     </figure>
 
-    <p>Now widen the lens to every Wimbledon final the charting project has logged, and score each on the whole index, not drama alone. Two decades open out below. Height is the overall score. The size of each circle is the drama score, the measured travel of the needle. The picture makes this article's argument at a glance: size and height often part ways. A wild final is not always a great one. A great one is not always wild.</p>
+    <p>Now zoom out to every Wimbledon men's final the data covers, and score each one on the whole index, not drama alone. Two decades, laid out below. Height is the overall score. The size of each dot is the drama score, how much the needle actually moved. And that's basically the whole argument of this piece in one picture: size and height don't always line up. A wild match isn't always a great one. A great match isn't always wild.</p>
 
     <figure class="reveal" id="fig2b">
       <div class="figtab"></div>
       <div class="figtitle">Two decades, the whole picture</div>
-      <div class="figsub">Overall match-quality index for every charted Wimbledon men’s final, 2006 to 2026. Circle size shows the drama score</div>
+      <div class="figsub">Overall match-quality index for every charted Wimbledon men's final, 2006 to 2026. Circle size shows the drama score</div>
       <svg id="timeline" viewBox="0 0 720 330" aria-label="Overall match-quality index for Wimbledon men's finals, 2006 to 2026. The 2019 and 2008 finals sit near the top; 2017 and 2018 at the bottom; the 2026 final is mid-table at 52. Circle size shows each final's drama score."></svg>
       <div class="tl-tip" id="tl-tip"></div>
-      <div class="foot">*The index blends measured on-court play with a judgment of stakes; only the drama score, the circle size, is exactly measured</div>
-      <div class="source">Tennis Abstract (Match Charting Project); 2026 via SlamTracker; author’s calculations. 2020 final not held; 2024 not charted</div>
+      <div class="foot">*This index mixes measured on-court stats with a judgment call about stakes. Only the drama score, the circle size, is purely measured</div>
+      <div class="source">Tennis Abstract (Match Charting Project); 2026 via SlamTracker; author's calculations. 2020 final not held; 2024 not charted</div>
     </figure>
 
-    <p>The table is unkind to received wisdom. The 2019 final tops it at 87: a big circle high on the board, drama and closeness and stamina all at once. Just behind sit two finals memory tends to rank lower: the pristine striking of 2014 and the five-set marathon of 2009. And the 2008 final, the one nearly everyone calls the greatest ever played, rates 72. Fourth in its own tournament, and only a slim margin behind. That is no insult. Its endurance was near-total and its drama among the highest here. But its rallies were only middling in length, and its striking was clean without being the era's cleanest. So on the ledger it settles just below finals built on purer ball-striking or greater length. The index already grants 2008 one of its largest stakes premiums, and it still finishes fourth. That is because stakes measures only what was on the line beforehand, and it is capped. It cannot weigh what a match becomes in memory: the failing light, the two championship points Mr Federer saved, the slow sense of an era turning. The index scores the match. The legend counts more.</p>
+    <p>This table doesn't have much respect for conventional wisdom. The 2019 final tops it at 87, a big dot near the top of the chart: drama, closeness and stamina, all at once. Right behind it sit two finals people usually rank lower: the pristine ball-striking of 2014, and the five-set slog of 2009. And the 2008 final, the one nearly everyone calls the greatest ever played, scores 72. Fourth in its own tournament, just barely behind the others. That's not a knock on it. Its endurance was near-total, and its drama score is one of the highest here. But the rallies were only middling in length, and the striking, while clean, wasn't the cleanest of the era. So on the numbers it lands just below finals built on purer shot-making or sheer length. This index already gives 2008 one of the biggest stakes bonuses of any final here, and it still only finishes fourth. That's because stakes only measures what was on the line before the match started, and it's deliberately capped. It can't account for what a match becomes afterward in people's memories: the fading light, the two championship points Federer saved, the sense of an era quietly turning over. The index scores the match. The legend does the rest.</p>
 
-    <p>Where does Mr Sinner's 2026 fall? At 52, a shade above the median of 48. That puts it in the broad middle of the modern era. Its rally length, unlike every other final here, is estimated rather than charted. Execution is its relative strength: the striking was clean, about three winners for every two unforced errors, and points were rarely given away even though the rallies ran short. But the needle scarcely moved, the match ran only four sets, and nothing hung on a knife-edge. So drama, competitiveness and endurance all sit low. The result is a well-made final, not a monument. Its 2025 predecessor, the first Sinner–Alcaraz Wimbledon final, scores 39, a notch lower still: for all its billing, a four-set win with a poorer winner-to-error count and not a single tie-break. Neither belongs with 2019 or the cleaner classics above them. The gap between a fine final and a great one, on this evidence, is about thirty-five points. And it is made of drama, closeness, and the hours a match demands.</p>
+    <p>So where does Sinner's 2026 final land? At 52, just a touch above the median of 48. Solidly in the middle of the pack for the modern era. One caveat worth flagging: unlike every other final here, its rally length is an estimate, not something actually counted from shot-by-shot data. Execution is where it holds up best: the hitting was clean, roughly three winners for every two unforced errors, and points rarely got given away even though the rallies themselves ran short. But the needle barely moved, the match only went four sets, and nothing ever hung by a thread. So drama, competitiveness and endurance all come in low. What you get is a well-played final, not a classic. Its predecessor, the first Sinner-Alcaraz Wimbledon final in 2025, actually scores lower still at 39: for all the hype, a four-set win with a worse winner-to-error ratio and not a single tie-break. Neither one belongs in the same conversation as 2019 or the cleaner classics above them. Based on this, the gap between a good final and a great one runs about thirty-five points, and it's made up of drama, closeness, and the hours a match demands of both players.</p>
 
     <figure class="reveal" id="fig3">
       <div class="figtab"></div>
@@ -266,40 +251,40 @@
         <div><div class="big red">87</div><div class="scorelab sans">2019 Wimbledon</div></div>
         <div class="vlab">Same legendary status, different shape: 2008 built on endurance and stakes, 2019 on drama and closeness</div>
       </div>
-      <div class="source">Author’s calculations. Tennis Abstract (Match Charting Project)</div>
+      <div class="source">Author's calculations. Tennis Abstract (Match Charting Project)</div>
     </figure>
 
-    <p>One honesty is owed to the tie-breaks. The measure samples the match once a game. So a whole tie-break, a dozen or more knife-edge points, registers as a single step. Inside those two shoot-outs, the point-by-point odds did swing sharply. A spectator who found them gripping was not wrong. The game-by-game reading simply cannot see that far in. But it does capture the question that decides the score: who would win the match. On that, Mr Sinner was seldom in real doubt.</p>
+    <p>One thing worth being upfront about: the tie-breaks. This measure only samples the match once per game, so a whole tie-break, a dozen or more knife-edge points, gets counted as a single step. Inside those two tie-breaks, the point-by-point odds really did swing hard, and if you found them gripping to watch, you weren't wrong. The game-by-game version of this measure just can't see that far in. What it does capture is the bigger question: who was actually going to win the match. And on that question, Sinner was rarely in real doubt.</p>
 
-    <p>None of this dims Mr Sinner's fortnight; it merely files it correctly. He kept the sport's oldest title, reached his fifth major, and won his hundredth match at the grand slams. Those are the marks of a player quietly bending an era around himself. The numbers ask only that the day be remembered for the right reason. <span class="kicker">The record books will keep this final; the pulse never will</span></p>
+    <p>None of this takes anything away from Sinner's fortnight, it just puts it in the right box. He kept hold of the sport's oldest title, reached his fifth grand slam final, and won his hundredth match at the majors. Those are the marks of a player quietly building an era around himself. The numbers just ask that we remember the day for the right reasons. <span class="kicker">The record books will keep this final. The pulse won't.</span></p>
   </article>
 
   <section class="refs">
     <div class="figtab"></div>
-    <h2 class="refhead">How the index is built</h2>
-    <p class="refintro">Every final in this article is scored out of 100 by one match-quality index: four ingredients measured on court, and a fifth applied over the top as a multiplier.</p>
+    <h2 class="refhead">How I actually scored this</h2>
+    <p class="refintro">Every final in this piece gets scored out of 100 by one match-quality index: four things measured straight off the court, and a fifth applied on top as a multiplier.</p>
     <div class="idxbox">
-      <div class="idxlab">The match-quality index</div>
-      <div class="idxeq">MQI = ( 0.30&#183;Execution + 0.20&#183;Competitiveness + <b>0.30&#183;Drama</b> + 0.20&#183;Endurance ) &#215; Stakes</div>
+      <div class="idxlab">The formula</div>
+      <div class="idxeq">Index = ( 0.30&#183;Execution + 0.20&#183;Competitiveness + <b>0.30&#183;Drama</b> + 0.20&#183;Endurance ) &#215; Stakes</div>
       <div class="idxeq" style="margin-top:11px;font-size:15px"><b>Execution</b> = 100 &#215; <span style="font-style:normal">[</span> &frac12;&#183;clamp( (R&#772; &#8722; 2.8) &#247; 2.5 ) + &frac12;&#183;clamp( (w &#8722; 0.42) &#247; 0.26 ) <span style="font-style:normal">]</span></div>
-      <div class="idxkey">R&#772; is the mean rally length in shots. w is the winners&rsquo; share of winners plus unforced errors: w = W &#247; (W + UE). Each half is capped to the 0-to-1 range. So execution rewards long rallies and clean, winner-heavy striking equally. The other three on-court components use their own fixed scales, described below. Why these weights? 0.3 on execution and drama, 0.2 on competitiveness and endurance. Match quality has no external truth to check them against, so they are a considered judgement, not a fit. Drama and execution simply carry the most weight. And the broad order holds under almost any reasonable reweighting: the 2019 epic and the marathons stay high, the blowouts stay low. Only the middle of the table moves.</div>
+      <div class="idxkey">R&#772; is the mean rally length in shots. w is the winners&rsquo; share of winners-plus-unforced-errors: w = W &#247; (W + UE). Both halves are capped between 0 and 1, so execution rewards long rallies and clean, winner-heavy hitting equally. The other three on-court parts each use their own fixed scale, explained below. Why these particular weights? 0.3 for execution and drama, 0.2 for competitiveness and endurance. There's no external answer key for "match quality," so these weights are a judgement call, not something fitted to the data, drama and execution just get to matter most. And the overall order barely budges under different reasonable weightings: the 2019 classic and the marathon finals stay near the top, the blowouts stay near the bottom. It's really only the middle of the table that shuffles around.</div>
     </div>
     <dl class="reflist">
       <dt>Execution &#183; scored 0 to 100</dt>
-      <dd>How the points were made and finished. It combines two measured things, in equal part: the mean rally length (how long points were sustained, stroke by stroke) and the balance of winners to unforced errors (how cleanly those points ended). Long, cleanly struck finals score high. Short or error-strewn ones score low. In figures: Execution = 100 &#215; [ &frac12;(mean rally &#8722; 2.8)&#247;2.5 + &frac12;(w &#8722; 0.42)&#247;0.26 ], each half held to the 0-to-100 range. <span class="eg">The 2014 final, long-rallied and clean, tops this scale. The error-strewn 2017 final sits at the bottom. The 2026 final is the one exception in the whole table: it was not charted shot by shot, so its rally length is estimated rather than counted, and its execution and index are marked accordingly.</span></dd>
+      <dd>How the points were made and finished. It blends two things, measured in equal parts: mean rally length (how long points were kept alive, stroke by stroke) and the ratio of winners to unforced errors (how cleanly those points ended). Long, clean-hitting finals score high. Short or error-riddled ones score low. <span class="eg">The 2014 final, long rallies and clean hitting, tops this scale. The error-strewn 2017 final sits at the bottom. 2026 is the one exception in the whole table: it wasn't charted shot by shot, so its rally length is estimated rather than counted, and its execution and index score are marked accordingly.</span></dd>
       <dt>Competitiveness &#183; scored 0 to 100</dt>
-      <dd>How close the contest ran: the number of sets and tie-breaks, the margin of the decisive set, and how near the loser came to winning. A straight-sets rout scores low; a five-set final decided in the last game scores high.</dd>
+      <dd>How close the match actually was: the number of sets and tie-breaks, how tight the deciding set got, and how near the loser came to winning. A straight-sets blowout scores low. A five-setter decided in the very last game scores high.</dd>
       <dt>Drama &#183; scored 0 to 100</dt>
-      <dd>The heart of the method. After every point, recompute the probability that the eventual champion will win. Read that line once per game. Sum the size of every move it makes, game by game: its total distance travelled. A procession barely moves it. A real comeback sends it plunging, then hauling back. That total sits on a scale where a routine final scores near 40 and the 2019 Wimbledon epic anchors the top near 95. Two choices shape it. First, the players are set to equal strength, each serving at the match average, so the line follows the score rather than the odds; this measures drama, not who was likelier to win. Second, it is sampled once a game, which keeps the arithmetic clean but under-counts the tension inside a tie-break, itself a dozen knife-edge points read as one step. <span class="eg">The 2026 final scores 49, low despite its two tie-breaks; 2008 scores 68; 2019 anchors the ceiling at 95.</span></dd>
+      <dd>This is the heart of the whole method. After every point, recalculate the odds that the eventual champion wins. Sample that line once per game. Add up how far it moves, game by game, its total distance travelled. A one-sided procession barely moves it. A real comeback sends it plunging, then hauling back. That total sits on a scale where a routine final scores around 40 and the 2019 Wimbledon final anchors the top near 95. Two choices shape this. First, both players are treated as evenly matched, each holding serve at the match average, so the line tracks the score rather than the odds, this measures drama, not who was more likely to win. Second, it's sampled once a game, which keeps the maths clean but under-counts the tension inside a tie-break itself, a dozen knife-edge points counted as a single step. <span class="eg">2026 scores 49, low despite its two tie-breaks. 2008 scores 68. 2019 anchors the ceiling at 95.</span></dd>
       <dt>Endurance &#183; scored 0 to 100</dt>
-      <dd>The physical toll: the length of the match and the number of games and points played. Longer, heavier finals score higher.</dd>
+      <dd>The physical cost: how long the match ran, and how many games and points were played. Longer, heavier finals score higher.</dd>
       <dt>Stakes &#183; a multiplier, not a score</dt>
-      <dd>The only ingredient not read from the court. It captures what the match meant: the occasion, the rivalry, and what was on the line, whether a ranking, a streak or a place in history. Rather than a 0-to-100 score, it is applied as a multiplier near 1, running roughly 1.00 to 1.15. So it can lift the on-court total by at most a tenth or so. The values are fixed in advance from the public record: the ranking, streak or milestone genuinely at stake, not tuned to how the match turned out. Another analyst might shade them by a point or two, which is exactly why the reach is capped so tightly, so such disagreement can move a final's total by only a point or so. <span class="eg">The largest premiums here go to 2008, 2011 and 2023 (about 1.11), each a marquee rivalry final with the No. 1 ranking or a milestone in play. The 2026 final draws 1.06, with Mr Alcaraz absent and the mood a shade cooler.</span></dd>
+      <dd>The one ingredient not read straight off the court. It captures what the match actually meant, the occasion, the rivalry, what was riding on it, whether that's a ranking, a streak, or a place in history. Instead of a 0-to-100 score, it's a multiplier close to 1, running roughly from 1.00 to 1.15, so it can only nudge the on-court total up by a tenth or so at most. The numbers are set in advance from the public record, the ranking, streak or milestone genuinely at stake, not adjusted after the fact based on how the match went. Someone else scoring this might shade a value by a point or two, which is exactly why the range is capped so tightly, that kind of disagreement can only move a final's total by a point or so. <span class="eg">The biggest bonuses here go to 2008, 2011 and 2023 (around 1.11 each), all marquee rivalry finals with the No. 1 ranking or a milestone on the line. 2026 gets 1.06, with Alcaraz absent and the mood a little cooler.</span></dd>
     </dl>
     <h3 class="reftabhead">Every final, scored</h3>
-    <div class="tabnote">All 19 charted Wimbledon men’s finals, ranked by the index. rally is the mean rally length in shots; W/E is the ratio of winners to unforced errors. Execution blends the two, in equal part. C is competitiveness, D drama, P endurance, S the stakes multiplier. Because execution rewards both sustained rallies and clean, winner-heavy striking, the long, cleanly played finals rank highest: 2014 and 2009 sit just behind 2019, with 2008 fourth. The 2026 final was not charted shot by shot. Its rally length, execution and index, marked with an asterisk, are estimated rather than measured.</div>
+    <div class="tabnote">All 19 charted Wimbledon men's finals, ranked by the index. rally is the mean rally length in shots. W/E is the ratio of winners to unforced errors. Execution blends the two equally. C is competitiveness, D drama, P endurance, S the stakes multiplier. Because execution rewards long rallies and clean hitting together, the long, cleanly played finals rank highest: 2014 and 2009 sit right behind 2019, with 2008 in fourth. 2026 wasn't charted shot by shot, so its rally length, execution and index, marked with an asterisk, are estimates rather than measurements.</div>
     <div class="tabwrap"><table class="mqitab" id="mqitab"></table></div>
-    <p class="refnote">Point-by-point data are from Tennis Abstract’s Match Charting Project for finals through 2025, and from Wimbledon’s SlamTracker for the 2026 final. Competitiveness, drama and endurance are computed from that data on fixed scales. Execution blends mean rally length with the winner-to-unforced-error balance. Stakes is a documented judgment. The 2019 final’s drama is held at 95 as the scale’s anchor, because its 26-game final set inflates the underlying measure. The 2026 final was not charted shot by shot, so its rally length is estimated. Across the charted finals, serve-heavier finals tend to have shorter rallies. Fitting that relationship and applying the 2026 final’s high share of serve points won implies a mean of about 3.7 shots. That link is loose, so the figure is indicative, and it is marked with an asterisk, along with the execution and index that rest on it. The other half of its execution, the winner-to-error count, is measured directly from the SlamTracker feed. All figures are the author’s calculations.</p>
+    <p class="refnote">Point-by-point data comes from Tennis Abstract's Match Charting Project for finals through 2025, and from Wimbledon's SlamTracker for the 2026 final. Competitiveness, drama and endurance are all computed from that data on fixed scales. Execution blends mean rally length with the winner-to-unforced-error ratio. Stakes is a documented judgement call. The 2019 final's drama score is held at 95 as the scale's anchor, because its 26-game deciding set would otherwise inflate the underlying number. 2026 wasn't charted shot by shot, so its rally length is an estimate: across the charted finals, the more serve-dominant a final is, the shorter its rallies tend to be, and fitting that pattern to 2026's high share of serve points won suggests a mean of roughly 3.7 shots. That relationship is a loose one, so the figure is indicative rather than solid, and it's marked with an asterisk, along with the execution and index built on it. The other half of its execution score, the winner-to-error count, is measured directly from the SlamTracker feed. All figures are my own calculations.</p>
   </section>
 </div>
 
@@ -325,47 +310,40 @@ function T(x,y,s,cls,anchor,extra){const e=E("text",{x,y,class:cls||"lab","text-
   svg.appendChild(defs);
   [0,.25,.5,.75,1].forEach(v=>{
     svg.appendChild(E("line",{x1:L,y1:Y(v),x2:L+pw,y2:Y(v),stroke:v===.5?MID:HAIR,"stroke-width":v===.5?1.2:1}));
-    svg.appendChild(T(L-8,Y(v)+3.5,Math.round(v*100),"lab","end"));
+    svg.appendChild(T(L-8,Y(v)+3.5,Math.round(v*100)+"%","lab","end"));
   });
   let band="M"+X(0)+" "+Y(wp[0]);
   for(let i=1;i<n;i++) band+="L"+X(i).toFixed(1)+" "+Y(wp[i]).toFixed(1);
   band+="L"+X(n-1)+" "+y50+"L"+X(0)+" "+y50+"Z";
-  svg.appendChild(E("path",{d:band,fill:ACC,"fill-opacity":0.11,"clip-path":"url(#cTop)"}));
-  svg.appendChild(E("path",{d:band,fill:DEF,"fill-opacity":0.13,"clip-path":"url(#cBot)"}));
-  const names=["Set 1","Set 2","Set 3","Set 4"], b=D.heroSetB.concat([n-1]);
-  for(let s=0;s<4;s++){
-    if(s>0){const x=X(b[s]);svg.appendChild(E("line",{x1:x,y1:Tm,x2:x,y2:Tm+ph,stroke:DIV,"stroke-width":1,"stroke-dasharray":"2 4"}));}
-    svg.appendChild(T((X(b[s])+X(b[s+1]))/2,Tm+ph+18,names[s],"lab","middle"));
-  }
+  const idT="hT",idB="hB";
+  const cT2=E("clipPath",{id:idT});cT2.appendChild(E("rect",{x:L,y:Tm,width:pw,height:y50-Tm}));
+  const cB2=E("clipPath",{id:idB});cB2.appendChild(E("rect",{x:L,y:y50,width:pw,height:(Tm+ph)-y50}));
+  defs.appendChild(cT2);defs.appendChild(cB2);
+  svg.appendChild(E("path",{d:band,fill:ACC,"fill-opacity":0.11,"clip-path":"url(#"+idT+")"}));
+  svg.appendChild(E("path",{d:band,fill:DEF,"fill-opacity":0.13,"clip-path":"url(#"+idB+")"}));
   let d="M"+X(0)+" "+Y(wp[0]);
   for(let i=1;i<n;i++) d+="L"+X(i).toFixed(1)+" "+Y(wp[i]).toFixed(1);
-  const path=E("path",{d,fill:"none",stroke:ACC,"stroke-width":2.2,"stroke-linejoin":"round","stroke-linecap":"round",class:"drawline"});
-  svg.appendChild(path);
-  const len=path.getTotalLength(); path.style.setProperty("--len",len);
-  const li=95;
-  svg.appendChild(E("circle",{cx:X(li),cy:Y(wp[li]),r:3.6,fill:DEF}));
-  svg.appendChild(T(X(li)+7,Y(wp[li])+15,"28%, a set down","anno","start",{fill:DEF}));
-  svg.appendChild(E("circle",{cx:X(n-1),cy:Y(wp[n-1]),r:3.6,fill:ACC}));
-  svg.appendChild(T(X(n-1)-6,Y(wp[n-1])-9,"Match won","anno","end",{fill:ACC}));
-  svg.appendChild(T(L-34,Tm-6,"Win %","lab","start"));
+  svg.appendChild(E("path",{d,fill:"none",stroke:ACC,"stroke-width":2,class:"drawline","stroke-linejoin":"round"}));
+  const lo=wp.indexOf(Math.min.apply(null,wp));
+  svg.appendChild(E("circle",{cx:X(lo),cy:Y(wp[lo]),r:3.2,fill:DEF}));
+  svg.appendChild(T(X(lo),Y(wp[lo])-10,"28%","anno","middle",{fill:DEF}));
+  svg.appendChild(T(X(n-1)-2,Y(wp[n-1])-10,"100%","anno","end",{fill:ACC}));
+  const path=svg.querySelector(".drawline");
+  if(path){const len=path.getTotalLength();path.style.setProperty("--len",len);}
 })();
 
 /* ---------- SMALL MULTIPLES ---------- */
 (function(){
-  const box=document.getElementById("small");
-  const N=D.matches.length;
-  D.matches.forEach((m,idx)=>{
-    const lead=m.name==="2026 Wimbledon";
-    const cell=document.createElement("div");
-    cell.className="sm"+(lead?" hi":"");
-    cell.innerHTML=
-      '<div class="rank">'+(idx+1)+'/'+N+'</div>'+
-      '<div class="nm">'+m.name+'</div>'+
-      '<div class="res">'+m.result+'</div>';
-    const W=130,H=64,L=2,R=2,Tm=6,Bm=6,pw=W-L-R,ph=H-Tm-Bm;
+  const box=document.getElementById("small"); if(!box) return;
+  const ms=D.matches.slice().sort((a,b)=>b.drama-a.drama);
+  ms.forEach((m,idx)=>{
+    const lead=idx===0;
+    const cell=document.createElement("div");cell.className="sm"+(lead?" hi":"");
+    cell.innerHTML='<div class="rank">'+(idx+1)+'</div><div class="nm">'+m.label+'</div><div class="res">'+m.result+'</div>';
+    const svg=document.createElementNS(NS,"svg");svg.setAttribute("viewBox","0 0 200 70");
     const wp=m.wp,n=wp.length;
+    const L=6,R=6,Tm=6,Bm=6,pw=200-L-R,ph=70-Tm-Bm;
     const X=i=>L+i/(n-1)*pw, Y=v=>Tm+(1-v)*ph, y50=Y(0.5);
-    const svg=E("svg",{viewBox:"0 0 "+W+" "+H,role:"img","aria-label":m.name+" win-probability shape, drama "+m.drama});
     let band="M"+X(0)+" "+Y(wp[0]);
     for(let i=1;i<n;i++) band+="L"+X(i).toFixed(1)+" "+Y(wp[i]).toFixed(1);
     band+="L"+X(n-1)+" "+y50+"L"+X(0)+" "+y50+"Z";
@@ -402,17 +380,14 @@ function T(x,y,s,cls,anchor,extra){const e=E("text",{x,y,class:cls||"lab","text-
   const y0=15,y1=100, x0=2006,x1=2026;
   const X=y=>L+(y-x0)/(x1-x0)*pw;
   const Y=v=>Tm+(1-(v-y0)/(y1-y0))*ph;
-  const Rd=d=>3.4+(d-39)/(95-39)*8.4;            /* drama -> radius */
-  /* gridlines */
+  const Rd=d=>3.4+(d-39)/(95-39)*8.4;
   [20,40,60,80,100].forEach(v=>{
     svg.appendChild(E("line",{x1:L,y1:Y(v),x2:L+pw,y2:Y(v),stroke:HAIR,"stroke-width":1}));
     svg.appendChild(T(L-8,Y(v)+3.5,v,"lab","end"));
   });
-  /* median */
   svg.appendChild(E("line",{x1:L,y1:Y(med),x2:L+pw,y2:Y(med),stroke:MID,"stroke-width":1,"stroke-dasharray":"2 4"}));
   svg.appendChild(T(L+2,Y(med)-5,"median "+med,"lab","start"));
   svg.appendChild(T(L-34,Tm-12,"Index","lab","start"));
-  /* dots (radius = drama) + year labels */
   TL.forEach(d=>{
     const x=X(d.y), y=Y(d.m), r=Rd(d.d), is26=d.y===2026, is19=d.y===2019;
     const col=is26?ACC:(is19?DEF:INK);
@@ -427,13 +402,12 @@ function T(x,y,s,cls,anchor,extra){const e=E("text",{x,y,class:cls||"lab","text-
     hit.addEventListener("click",ev=>{show(d);move(ev);});
     svg.appendChild(hit);
   });
-  /* hover card */
   const fig=document.getElementById("fig2b"), tip=document.getElementById("tl-tip");
   function chip(d){return d.y===2026?ACC:(d.y===2019?DEF:INK);}
   function show(d){
     tip.innerHTML='<div class="t-w">'+d.w+' <span>def.</span> '+d.l+'</div>'+
       '<div class="t-sc">'+d.sc+'</div>'+
-      '<div class="t-m">'+d.y+' Wimbledon<span class="chip" style="background:'+chip(d)+'">MQI '+d.m+'</span><span class="chip2">drama '+d.d+'</span></div>';
+      '<div class="t-m">'+d.y+' Wimbledon<span class="chip" style="background:'+chip(d)+'">Index '+d.m+'</span><span class="chip2">drama '+d.d+'</span></div>';
     tip.classList.add("on");
   }
   function move(ev){
@@ -445,7 +419,6 @@ function T(x,y,s,cls,anchor,extra){const e=E("text",{x,y,class:cls||"lab","text-
   function hide(){tip.classList.remove("on");}
   svg.addEventListener("mouseleave",hide);
   document.addEventListener("click",ev=>{if(!ev.target.closest("#fig2b"))hide();});
-  /* annotations */
   svg.appendChild(T(X(2019)+Rd(95)+7,Y(87)+3,"2019: top of the table","anno","start",{fill:DEF}));
   svg.appendChild(T(X(2008)+Rd(68)+7,Y(72)+3,"2008: fourth here","anno","start",{fill:INK}));
   svg.appendChild(T(X(2026)-Rd(49)-7,Y(52)+3,"2026","anno","end",{fill:ACC}));
@@ -480,7 +453,7 @@ function T(x,y,s,cls,anchor,extra){const e=E("text",{x,y,class:cls||"lab","text-
   const t=document.getElementById("mqitab"); if(!t) return;
   const rows=D.timeline.slice().sort((a,b)=>b.m-a.m);
   let html='<thead><tr><th class="l">Year</th><th class="l">Final</th>'+
-    '<th class="alt">rally</th><th class="alt">W/E</th><th>E</th><th>C</th><th>D</th><th>P</th><th>S</th><th>MQI</th></tr></thead><tbody>';
+    '<th class="alt">rally</th><th class="alt">W/E</th><th>E</th><th>C</th><th>D</th><th>P</th><th>S</th><th>Index</th></tr></thead><tbody>';
   rows.forEach(r=>{
     const hi=r.y===2026?' class="hi"':'';
     const k=r.est?'*':'';
