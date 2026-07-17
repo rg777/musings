@@ -74,6 +74,12 @@
   .trow{display:grid;grid-template-columns:150px 1fr;align-items:center;gap:12px}
   .tname{font-size:12.5px;color:var(--ink-soft);text-align:right}
   .ttrack{position:relative;height:22px}
+  .ttrack .base-line{position:absolute;left:0;right:0;top:50%;height:1px;background:var(--hair);transform:translateY(-50%)}
+  .ttrack .range-bar{position:absolute;top:50%;height:4px;border-radius:2px;transform:translateY(-50%);background:var(--accent);opacity:0.35}
+  .ttrack .dot{position:absolute;top:50%;border-radius:50%;transform:translate(-50%,-50%);background:var(--accent)}
+  .ttrack .dot.consensus{background:var(--gold)}
+  .ttrack .dot-label{position:absolute;top:50%;transform:translateY(-50%);font:700 11px "Karla",sans-serif;color:var(--gold);white-space:nowrap}
+  .ttrack .axis-tick{position:absolute;top:50%;transform:translate(-50%,-50%);font:400 11px "Karla",sans-serif;color:var(--grey);white-space:nowrap}
   @media(max-width:560px){.trow{grid-template-columns:96px 1fr}.tname{font-size:11px}}
 
   .refs{margin:60px 0 0;padding-top:14px;border-top:2px dashed var(--divider)}
@@ -396,23 +402,21 @@ function money(v){return v>=1000?('$'+(v/1000).toFixed(2)+'B'):('$'+Math.round(v
   D.trackers.forEach(t=>{
     const single=t.lo===t.hi;
     rows+='<div class="trow"><div class="tname">'+t.name+'</div><div class="ttrack">'+
-      '<svg viewBox="0 0 300 22" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%">'+
-        '<line x1="0" y1="11" x2="300" y2="11" stroke="'+HAIR+'" stroke-width="1"/>'+
-        (single?'':'<line x1="'+(X(t.lo)*3)+'" y1="11" x2="'+(X(t.hi)*3)+'" y2="11" stroke="'+ACC+'" stroke-width="4" stroke-linecap="round" opacity="0.35"/>')+
-        '<circle cx="'+(X(t.mid)*3)+'" cy="11" r="5" fill="'+ACC+'"/>'+
-      '</svg></div></div>';
+      '<div class="base-line"></div>'+
+      (single?'':'<div class="range-bar" style="left:'+X(t.lo)+'%;width:'+(X(t.hi)-X(t.lo))+'%"></div>')+
+      '<div class="dot" style="left:'+X(t.mid)+'%;width:11px;height:11px"></div>'+
+      '</div></div>';
   });
   // consensus marker row
   rows+='<div class="trow"><div class="tname" style="font-weight:700;color:var(--gold)">consensus</div><div class="ttrack">'+
-    '<svg viewBox="0 0 300 22" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%">'+
-    '<line x1="0" y1="11" x2="300" y2="11" stroke="'+HAIR+'"/>'+
-    '<circle cx="'+(X(D.consensus)*3)+'" cy="11" r="5.5" fill="'+GOLD+'"/>'+
-    '<text x="'+(X(D.consensus)*3+12)+'" y="14.5" text-anchor="start" style="font:700 10px Karla;fill:'+GOLD+'">$'+D.consensus+'M</text></svg></div></div>';
+    '<div class="base-line"></div>'+
+    '<div class="dot consensus" style="left:'+X(D.consensus)+'%;width:13px;height:13px"></div>'+
+    '<div class="dot-label" style="left:calc('+X(D.consensus)+'% + 14px)">$'+D.consensus+'M</div>'+
+    '</div></div>';
   // axis
   rows+='<div class="trow"><div class="tname"></div><div class="ttrack" style="height:16px">'+
-    '<svg viewBox="0 0 300 16" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%">'+
-    [80,90,100,110,120].map(v=>'<text x="'+(X(v)*3)+'" y="11" text-anchor="middle" style="font:400 9px Karla;fill:'+GREY+'">$'+v+'M</text>').join('')+
-    '</svg></div></div>';
+    [80,90,100,110,120].map(v=>'<div class="axis-tick" style="left:'+X(v)+'%">$'+v+'M</div>').join('')+
+    '</div></div>';
   box.innerHTML=rows;
 })();
 
