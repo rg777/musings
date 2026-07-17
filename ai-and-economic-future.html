@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A hundred million times faster, two or three times richer</title>
+<meta name="description" content="A new Stanford essay on AI and economic growth argues the big gains are real but decades away, while the risks might not wait that long. Here's the data behind it.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Random Musings">
+<meta property="og:title" content="A hundred million times faster, two or three times richer">
+<meta property="og:description" content="A new Stanford essay on AI and economic growth argues the big gains are real but decades away, while the risks might not wait that long. Here's the data behind it.">
+<meta property="og:url" content="https://offthemodel.com/ai-and-economic-future.html">
+<meta property="og:image" content="https://offthemodel.com/og/og-ai-economic-future.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A hundred million times faster, two or three times richer: reading Chad Jones's weak-link theory of AI and growth">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A hundred million times faster, two or three times richer">
+<meta name="twitter:description" content="A new Stanford essay on AI and economic growth: the gains are real but decades away, and the risks might not wait that long.">
+<meta name="twitter:image" content="https://offthemodel.com/og/og-ai-economic-future.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDE6D6; --card:#F4EFE2; --ink:#221F1A; --ink-soft:#6B6455;
+    --grey:#8C8573; --hair:#DCD3BE; --divider:#D9D0BC;
+    --accent:#33507A; --accent-tint:rgba(51,80,122,0.14);
+    --gold:#B5533C; --gold-tint:rgba(181,83,60,0.14);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Karla",Arial,sans-serif;font-size:18px;line-height:1.72;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:700px;margin:0 auto;padding:56px 24px 100px}
+  .back{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;
+    color:var(--ink-soft);text-decoration:none;margin-bottom:22px}
+  .back:hover{color:var(--accent)} .back svg{width:13px;height:13px}
+  h1{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:40px;line-height:1.12;
+    letter-spacing:-0.01em;margin:0 0 14px;max-width:23ch}
+  .deck{font-size:19px;line-height:1.5;color:var(--ink-soft);margin:0 0 28px;max-width:56ch}
+  .meta{font-size:12.5px;letter-spacing:.03em;color:var(--grey);margin:0 0 30px}
+  article p{margin:0 0 22px}
+  article a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--hair)}
+  article a:hover{text-decoration-color:var(--accent)}
+  .kicker{font-family:"Fraunces",Georgia,serif;font-style:italic;color:var(--accent)}
+  figure{margin:40px 0}
+  .figtab{width:30px;height:3px;background:var(--accent);margin-bottom:12px;border-radius:2px}
+  .figtitle{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:22px;margin:0 0 4px}
+  .figsub{font-size:14px;color:var(--ink-soft);margin:0 0 16px;line-height:1.4}
+  .source{font-size:12px;color:var(--grey);margin-top:12px;display:flex;align-items:center;gap:7px}
+  .source::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex:0 0 auto}
+  .foot{font-size:12px;color:var(--grey);margin-top:5px}
+  svg{display:block;width:100%;height:auto;overflow:visible}
+  .lab{font-family:"Karla",sans-serif;fill:var(--grey);font-size:11px}
+  .anno{font-family:"Karla",sans-serif;font-size:11.5px;font-weight:600}
+
+  .idxbox{margin:28px 0;padding:16px 20px 15px;border:1px solid var(--divider);
+    border-left:3px solid var(--accent);background:var(--card);border-radius:6px}
+  .idxbox .idxlab{font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:9px}
+  .idxbox .idxeq{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:16.5px;line-height:1.6}
+  .idxbox .idxeq b{color:var(--gold)}
+  .idxbox .idxkey{font-size:13px;color:var(--ink-soft);margin-top:9px;line-height:1.55}
+
+  .stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}
+  .stat3 .sc{border:1px solid var(--divider);border-radius:8px;padding:14px 12px;background:var(--card);text-align:center}
+  .stat3 .sc .n{font-family:"Fraunces",Georgia,serif;font-weight:700;font-size:26px;color:var(--gold);line-height:1}
+  .stat3 .sc .l{font-size:11px;color:var(--ink-soft);margin-top:6px;line-height:1.35}
+  @media(max-width:560px){.stat3{grid-template-columns:1fr}}
+
+  .risk-rows{display:flex;flex-direction:column;gap:14px;margin-top:6px}
+  .risk-row .rlab{font-size:13px;color:var(--ink-soft);margin-bottom:5px;line-height:1.4}
+  .risk-track{height:16px;background:var(--hair);border-radius:3px;position:relative}
+  .risk-fill{height:100%;border-radius:3px;background:var(--gold)}
+  .risk-val{font-family:"Fraunces",Georgia,serif;font-weight:700;font-size:15px;color:var(--gold);margin-left:8px}
+  .risk-row .rline{display:flex;align-items:center}
+
+  .refs{margin:60px 0 0;padding-top:14px;border-top:2px dashed var(--divider)}
+  .refs .refhead{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:26px;margin:12px 0 8px}
+  .refs .refintro{font-size:16px;color:var(--ink-soft);margin:0 0 18px;line-height:1.6}
+  .reflist dt{font-weight:700;font-size:13.5px;color:var(--accent);margin:20px 0 5px}
+  .reflist dd{margin:0;font-size:16px;line-height:1.6}
+  .reflist dd .eg{color:var(--ink-soft);font-style:italic}
+  .refnote{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:26px 0 0;padding-top:16px;border-top:1px solid var(--divider)}
+
+  @media(max-width:560px){h1{font-size:30px}body{font-size:17px}}
+  @media (prefers-reduced-motion:no-preference){
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.in{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="back" href="index.html">
+      <svg viewBox="0 0 12 12" fill="none"><path d="M10 6H2M5 2 1 6l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Random Musings
+    </a>
+    <h1>A hundred million times faster, two or three times richer</h1>
+    <p class="deck">Your phone has about 100 million times the computing power a 1970s machine had. You are not 100 million times richer. A new Stanford essay on AI and growth explains why, and argues the gains from here are real but slow, while the risks might not be.</p>
+    <p class="meta">17 July 2026 &middot; co-written with Claude Fable &middot; analysis by Claude Fable, based on Charles I. Jones (2026)</p>
+  </header>
+
+  <article>
+    <p>Open the calculator app on your phone and you're holding something like 100 million times the transistors that the best computers had in the early 1970s. That's one of the largest jumps in raw capability any technology has handed an ordinary person, in any span of decades. And yet you are not 100 million times more productive than an economist working in 1972. Two or three times, maybe, on a good day. That gap, and what it implies about what AI can and can't do to the economy, is the subject of a <a href="https://web.stanford.edu/~chadj/AIandEconomicFuture.pdf" target="_blank" rel="noopener noreferrer">recent essay by Stanford's Chad Jones</a>, written for the Journal of Economic Perspectives and expanded on in a talk he gave this spring alongside MIT's Daron Acemoglu. It's the clearest thing I've read this year on where AI's economic upside actually comes from, and why it might arrive on a very different clock than its risks.</p>
+
+    <p>Start with a chart Jones calls his favorite in all of economics. Plot US income per person over the last 150 years on a scale where equal distances mean equal percentage changes, and the line is almost eerily straight: about 2% growth a year, give or take, since 1870. What makes that strange is everything that happened along the way. Electric lighting, the internal combustion engine, antibiotics, the transistor, the personal computer, the internet, every one of them a genuine transformation of daily life. And the growth rate barely moved.</p>
+
+    <figure class="reveal" id="fig1">
+      <div class="figtab"></div>
+      <div class="figtitle">Two centuries, one straight line</div>
+      <div class="figsub">US income per person, 1870 to 2025, on a scale where a straight line means constant percentage growth</div>
+      <svg id="growth" viewBox="0 0 720 320" aria-label="US income per person rising at a roughly constant 2 percent per year from 1870 to 2025, with a dip during the Great Depression and a bump during World War Two, but no lasting change in the trend."></svg>
+      <div class="foot">*Stylized illustration of the trend Jones describes, not the underlying BEA/Barro-Ursua dataset</div>
+      <div class="source">Pattern described in Jones (2026); illustrative reconstruction, not original data</div>
+    </figure>
+
+    <p>So which future does AI belong to? Jones lays out two deliberately extreme scenarios, since neither is quite right but both teach you something. In the first, AI keeps compounding on itself: it makes software engineers dramatically more productive, then automates AI research itself, then uses that to design better robots, and eventually handles nearly every task a human can do, cognitive or physical. Dario Amodei's phrase for the middle of that story, a <a href="https://www.anthropic.com/news/claude-opus-4-5" target="_blank" rel="noopener noreferrer">"country of geniuses in a data center,"</a> is doing a lot of work in Silicon Valley right now, and there's already real evidence behind the early steps. A benchmark that measures how long an AI agent can work on a task unsupervised before it fails has been doubling roughly every six months since 2020; since late 2024's reasoning models arrived, that doubling time has reportedly quickened to under four months.</p>
+
+    <figure class="reveal" id="fig4">
+      <div class="figtab"></div>
+      <div class="figtitle">How long can an AI work before it needs a human</div>
+      <div class="figsub">METR's task-horizon benchmark: the length of task an AI can complete unsupervised with 50% reliability</div>
+      <svg id="metr" viewBox="0 0 720 300" aria-label="AI task-completion horizon rising from 9 seconds in 2020 to 11 minutes in mid-2024 to 12 hours in mid-2026, doubling roughly every six months, with the pace quickening to under four months since late 2024."></svg>
+      <div class="source">METR (2026); Epoch AI; Emberson (2025), cited in Jones (2026)</div>
+    </figure>
+
+    <p>The second extreme takes that 2% line at face value and says AI is just the next entry on the list: transformative the way electricity was transformative, but not growth-rate-changing. The logic is that within any given technology, the easy ideas get found first, so each field's contribution naturally fades unless something new arrives to take its place. On this account, every "transformative" technology in that graph didn't accelerate growth so much as prevent a slowdown, and each one took decades to fully arrive. Factories had to be physically rebuilt around small electric motors instead of one giant steam-driven shaft before electricity's productivity gains showed up, and, famously, you could see the computer age everywhere except in the productivity statistics for years after computers actually turned up everywhere.</p>
+
+    <p>Jones's real contribution is a way of thinking that sits between these two stories, and it's a genuinely useful idea even outside economics: weak links. A chain is only as strong as its weakest link, and an economy, he argues, works the same way. Shipping a new smartphone means design, chip fabrication to impossibly tight tolerances, a global supply chain, timely delivery, marketing, retail, and getting any one of those links wrong sinks the value of the whole chain, the way one twenty-five-dollar rubber O-ring brought down the Challenger. Automating some links beautifully doesn't fix a chain if the rest are still slow.</p>
+
+    <p>This is where the phone in your pocket comes back in. Cheap computing solved one link spectacularly well: matrix inversion, once a job for a room of human "computers," is now instant. But deciding what matrix to invert, what question to ask, what to test, that's still a human doing a human's job at close to a human's pace. A hundred million times more of one input, bottlenecked by everything else that hasn't changed, buys you maybe two or three times the output. Jones turns that intuition into an actual formula: economic output behaves like the harmonic mean of the tasks that feed into it, a kind of average that's dominated by its smallest term, which is exactly why making one input infinite still leaves total output finite.</p>
+
+    <div class="idxbox reveal">
+      <div class="idxlab">The formula</div>
+      <div class="idxeq">GDP gain from infinitely automating a task &nbsp;=&nbsp; <b>( 1 &divide; (1 &minus; s) )<sup>&sigma;/(1&minus;&sigma;)</sup></b></div>
+      <div class="idxkey">s is the share of GDP that task currently costs. &sigma; measures how easily tasks substitute for one another; Jones calibrates it to 0.2, meaning tasks are strong complements, so the exponent works out to 0.25. Automate a task worth 2% of GDP (roughly software) to infinity, and GDP rises about 1%. Automate half of everything, cognitive and physical, and GDP rises 19%. To literally double income per person requires infinitely automating 94% of everything humans currently do.</div>
+    </div>
+
+    <figure class="reveal" id="fig2">
+      <div class="figtab"></div>
+      <div class="figtitle">What one automated task is actually worth</div>
+      <div class="figsub">GDP gain from infinitely automating a task, by how much of the economy that task represents</div>
+      <svg id="automation" viewBox="0 0 720 340" aria-label="GDP gain from infinite automation rises slowly at first, reaching only a 19 percent gain at 50 percent of the economy automated, and requiring 94 percent automation to double GDP."></svg>
+      <div class="source">Formula from Jones and Tonetti (2026); recomputed and verified against the paper's published figure</div>
+    </figure>
+
+    <p>None of this rules out an eventual growth explosion, and Jones is careful to say so. Automating tasks produces new ideas, new ideas enable automating more tasks, and that loop can genuinely run away with itself once nearly everything has been automated. Run a simplified version of the model forward, assuming the automatable share of the economy grows by one percentage point a year, and the shape is unmistakable: for the first 50 to 60 years the growth rate barely moves off its historical 2%, and only in the final quarter of the run does the curve bend sharply upward, just before the math sends it to infinity as full automation is approached. In the fuller, calibrated simulations Jones ran with Acemoglu, even a fairly aggressive setting only gets the US to about 2.3% growth by 2050, up from 2% today, and it can take a century or more before the flywheel fully takes hold.</p>
+
+    <figure class="reveal" id="fig3">
+      <div class="figtab"></div>
+      <div class="figtitle">The slow build to an explosion</div>
+      <div class="figsub">An illustrative version of the dynamic model: the automatable share of the economy grows 1 percentage point a year</div>
+      <svg id="dynamic" viewBox="0 0 720 320" aria-label="Income multiplier over 100 years stays close to flat for the first 60 to 70 years, then rises sharply in the final decades as automation approaches completion, on a logarithmic scale."></svg>
+      <div class="foot">*Simplified illustration of the mechanism, not a forecast; the full dynamic model is in Jones and Tonetti (2026)</div>
+      <div class="source">Jones (2026), Section 3; illustrative reconstruction of the described mechanism</div>
+    </figure>
+
+    <p>Two concrete examples anchor how slow "slow" can be. Self-driving cars looked like an easy problem back in 2004: turn the wheel, work the pedals, that's really the whole job. None of the fifteen vehicles in that year's DARPA Grand Challenge finished the course; the best one covered eight of the 142 miles. Twenty-two years later, Waymo has logged over 170 million driverless miles, and it remains, functionally, a San Francisco phenomenon. On the labor side: Geoffrey Hinton predicted in 2016 that medical schools should stop training radiologists, since AI would replace them within five years. There are more radiologists today than there were in 2016, and they're paid more, because reading a scan was never the entire job. Automating three-quarters of a role's tasks can raise the wage of whoever still does the remaining quarter. Automating all of them, closer to what may be coming for narrower jobs like driving for a living, doesn't.</p>
+
+    <p>Here's the turn that makes this worth reading past the growth charts. Jones argues weak links cut both ways: they slow the benefits of automation, but they don't slow the risks, they might even speed them up. A chain that takes decades to strengthen link by link can still be destroyed in an instant by damaging just one of them. An AI capable enough to be a genuinely superhuman software engineer doesn't need to automate the whole economy to do serious harm; it only needs to find the one link worth attacking. In the talk, Acemoglu described a next-generation model that reportedly surfaced thousands of previously unknown bugs in decades-old, heavily used software, and asked the obvious next question: what happens once a capability like that reaches anyone with bad intentions, not just the lab that built it. The more speculative version of the worry is stranger: we're growing a new kind of intelligence we don't fully understand, and historically, encounters between more- and less-advanced civilizations haven't gone well for the less advanced side. Berkeley's Stuart Russell put the concern in a single line during a research seminar: "How do we retain power over entities more powerful than us, forever?"</p>
+
+    <p>Jones has separately tried to put numbers on how much risk is worth accepting for how much upside, and the results are uncomfortable in an interesting way. Take a simple model of how people value additional income, and give AI a genuinely enormous payoff: 10% annual growth, doubling living standards every seven years, in exchange for a one-time chance of wiping out humanity. Under one common assumption about how much extra income is worth to people who already have a lot, the acceptable risk is startlingly high, better than a one-in-three chance of extinction. Under a more realistic assumption about how fast that value fades, it falls to 2.5%. But add one more realistic ingredient, that an AI capable of that kind of growth would probably also drive major medical breakthroughs, and the calculation flips again: if it cuts mortality in half, people become willing to accept up to a one-in-four chance of extinction, because the tradeoff is no longer consumption against death, it's one cause of death against another.</p>
+
+    <figure class="reveal" id="fig5">
+      <div class="figtab"></div>
+      <div class="figtitle">How much extinction risk is "worth it"</div>
+      <div class="figsub">Acceptable one-time extinction risk in exchange for 10% annual growth, under three assumptions</div>
+      <div class="risk-rows" id="riskbars"></div>
+      <div class="source">Jones (2024), "The AI Dilemma: Growth versus Existential Risk," American Economic Review: Insights</div>
+    </figure>
+
+    <p>For a benchmark that's easier to feel in your gut: in 2020, the US effectively spent around 4% of GDP to reduce a roughly 0.3% individual mortality risk from Covid, by shutting down large parts of the economy. Standard government estimates of the value of a statistical life imply Americans would be willing to pay more than the equivalent of their entire per-capita GDP just to cut mortality risk by a single percentage point. Weighed against even a rough estimate of how effective safety research might be, Jones's calculations suggest current AI safety investment is too low by a factor of thirty or more, and that spending on the order of $100 billion a year, about a third of one percent of GDP, would clear a standard cost-benefit test easily.</p>
+
+    <div class="stat3 reveal">
+      <div class="sc"><div class="n">4%</div><div class="l">of GDP spent in 2020 against a 0.3% Covid mortality risk</div></div>
+      <div class="sc"><div class="n">111%</div><div class="l">of per-capita GDP: implied willingness to pay to cut mortality risk 1 point</div></div>
+      <div class="sc"><div class="n">0.33%</div><div class="l">of GDP ($100B/yr): suggested AI-safety spending that clears cost-benefit tests</div></div>
+    </div>
+
+    <p>So where does that leave the two extremes I opened with? Probably both right, at different timescales. The weak-link view says the big economic gains from AI are likely real but genuinely slow, plausibly decades away, the same decades it took factories to fully absorb electricity or offices to fully absorb the internet. It also says the risks don't have to wait for that. A single weak link, hacked, can do damage on a timescale of weeks, long before the flywheel of automation has spun up the rest of the economy. Big gains arriving late, and big risks arriving early: that asymmetry is the single most useful idea in the whole essay, and it argues for spending the slow years actually preparing, for labor-market disruption and for the sharper, nearer-term risks, rather than waiting to find out which extreme turns out to be right. <span class="kicker">The chain only needs one weak link to fail. It needs nearly all of them fixed to fly.</span></p>
+  </article>
+
+  <section class="refs">
+    <div class="figtab"></div>
+    <h2 class="refhead">Where this came from</h2>
+    <p class="refintro">This piece synthesizes a working paper by Stanford economist Charles I. Jones, prepared for the Journal of Economic Perspectives, and a public talk and Q&amp;A he gave with MIT's Daron Acemoglu this spring. Every formula below was independently recomputed rather than taken on faith, and matches the paper's own published figures.</p>
+    <dl class="reflist">
+      <dt>The 150-year growth trend</dt>
+      <dd>A stylized reconstruction of the well-documented pattern Jones describes: US income per person growing at roughly 2% a year since 1870, with a dip through the Great Depression and a bump during World War Two. I did not have row-level access to the underlying Bureau of Economic Analysis and Barro-Ursua series the paper actually uses, so this chart illustrates the shape, not the exact historical values.</dd>
+      <dt>The automation-gain formula</dt>
+      <dd>This one is exact, not illustrative. The formula GDP gain = (1/(1-s))^(&sigma;/(1-&sigma;)) with &sigma;=0.2 is stated directly in Jones and Tonetti (2026) as cited in the essay. I recomputed it independently and it reproduces the paper's own annotated points precisely: 2% of GDP automated &rarr; 1.01x, 25% &rarr; 1.07x, 50% &rarr; 1.19x, 75% &rarr; 1.41x, 94% &rarr; 2.00x.</dd>
+      <dt>The slow-build simulation</dt>
+      <dd>An illustrative simplification the essay itself proposes: assume the automatable share of the economy rises by one percentage point every year, apply the same formula, and read the result as a time series. This is explicitly a stripped-down stand-in for the fuller dynamic model in Jones and Tonetti (2026), not a forecast in its own right, and the essay is careful to say so.</dd>
+      <dt>The AI-capability data</dt>
+      <dd>Task-horizon figures (9 seconds in 2020, 11 minutes in mid-2024, 12 hours in mid-2026) and the doubling-time estimates are from METR's public benchmark work, cited via Emberson (2025) and Epoch AI (2025) in the essay. My own recomputation of the doubling time from these three points, roughly 6 months across the full period and under 4 months since late 2024, matches the ranges the essay states.</dd>
+      <dt>The existential-risk figures</dt>
+      <dd>These are Jones's own published results from a separate 2024 paper in American Economic Review: Insights, not something derived for this piece. They're thought experiments about the structure of risk tolerance under different assumptions about utility, not policy recommendations.</dd>
+      <dt>What's rigorous vs. illustrative</dt>
+      <dd>The formulas, the METR data, and the existential-risk figures come from the peer-reviewed or working-paper material and are stated as fact. Specific growth-rate projections mentioned in the talk portion (for example, 2.3% growth by 2050 under one calibration) come from simulations both speakers explicitly cautioned shouldn't be taken as literal forecasts, and this piece preserves that caveat rather than presenting them as settled predictions.</dd>
+    </dl>
+    <p class="refnote">Primary source: Charles I. Jones, <a href="https://web.stanford.edu/~chadj/AIandEconomicFuture.pdf" target="_blank" rel="noopener noreferrer">"AI and Our Economic Future"</a>, prepared for the Journal of Economic Perspectives, Version 2.0, May 18, 2026. Supplementary source: a public talk and Q&amp;A featuring Daron Acemoglu and Chad Jones. Other works cited within: Jones and Tonetti, "Past Automation and Future A.I." (2026); Jones, "The AI Dilemma: Growth versus Existential Risk," American Economic Review: Insights (2024); METR, "Task-Completion Time Horizons of Frontier AI Models" (2026); Amodei, "Machines of Loving Grace" (2024); Mousa, "The algorithm will see you now," Works in Progress (2025); Waymo, "Safety Impact" (2026); DARPA Grand Challenge retrospective (2014). This is analysis and visualization of published, third-party research, not original modeling; read the source essay for the complete derivations and full bibliography. Data gathering, computation and charts by Claude Fable, Anthropic's AI model; the article itself is co-written.</p>
+  </section>
+</div>
+
+<script>
+const D = {"income_series": [{"year": 1870, "value": 3986, "trend": 4000}, {"year": 1871, "value": 4052, "trend": 4080}, {"year": 1872, "value": 4174, "trend": 4162}, {"year": 1873, "value": 4209, "trend": 4245}, {"year": 1874, "value": 4333, "trend": 4330}, {"year": 1875, "value": 4404, "trend": 4416}, {"year": 1876, "value": 4465, "trend": 4505}, {"year": 1877, "value": 4595, "trend": 4595}, {"year": 1878, "value": 4643, "trend": 4687}, {"year": 1879, "value": 4774, "trend": 4780}, {"year": 1880, "value": 4834, "trend": 4876}, {"year": 1881, "value": 4933, "trend": 4973}, {"year": 1882, "value": 5065, "trend": 5073}, {"year": 1883, "value": 5208, "trend": 5174}, {"year": 1884, "value": 5238, "trend": 5278}, {"year": 1885, "value": 5354, "trend": 5383}, {"year": 1886, "value": 5505, "trend": 5491}, {"year": 1887, "value": 5651, "trend": 5601}, {"year": 1888, "value": 5722, "trend": 5713}, {"year": 1889, "value": 5815, "trend": 5827}, {"year": 1890, "value": 6000, "trend": 5944}, {"year": 1891, "value": 6008, "trend": 6063}, {"year": 1892, "value": 6228, "trend": 6184}, {"year": 1893, "value": 5904, "trend": 6308}, {"year": 1894, "value": 6005, "trend": 6434}, {"year": 1895, "value": 6122, "trend": 6562}, {"year": 1896, "value": 6268, "trend": 6694}, {"year": 1897, "value": 6458, "trend": 6828}, {"year": 1898, "value": 6920, "trend": 6964}, {"year": 1899, "value": 7115, "trend": 7103}, {"year": 1900, "value": 7266, "trend": 7245}, {"year": 1901, "value": 7371, "trend": 7390}, {"year": 1902, "value": 7545, "trend": 7538}, {"year": 1903, "value": 7622, "trend": 7689}, {"year": 1904, "value": 7774, "trend": 7843}, {"year": 1905, "value": 7953, "trend": 8000}, {"year": 1906, "value": 8189, "trend": 8160}, {"year": 1907, "value": 8311, "trend": 8323}, {"year": 1908, "value": 8458, "trend": 8489}, {"year": 1909, "value": 8674, "trend": 8659}, {"year": 1910, "value": 8824, "trend": 8832}, {"year": 1911, "value": 8973, "trend": 9009}, {"year": 1912, "value": 9243, "trend": 9189}, {"year": 1913, "value": 9410, "trend": 9373}, {"year": 1914, "value": 9511, "trend": 9560}, {"year": 1915, "value": 9766, "trend": 9751}, {"year": 1916, "value": 9951, "trend": 9946}, {"year": 1917, "value": 10221, "trend": 10145}, {"year": 1918, "value": 10396, "trend": 10348}, {"year": 1919, "value": 10510, "trend": 10555}, {"year": 1920, "value": 10870, "trend": 10766}, {"year": 1921, "value": 10898, "trend": 10982}, {"year": 1922, "value": 11183, "trend": 11201}, {"year": 1923, "value": 11484, "trend": 11425}, {"year": 1924, "value": 11573, "trend": 11654}, {"year": 1925, "value": 11884, "trend": 11887}, {"year": 1926, "value": 12013, "trend": 12125}, {"year": 1927, "value": 12409, "trend": 12367}, {"year": 1928, "value": 12681, "trend": 12614}, {"year": 1929, "value": 12886, "trend": 12867}, {"year": 1930, "value": 10314, "trend": 13124}, {"year": 1931, "value": 10136, "trend": 13387}, {"year": 1932, "value": 10144, "trend": 13654}, {"year": 1933, "value": 10047, "trend": 13927}, {"year": 1934, "value": 12094, "trend": 14206}, {"year": 1935, "value": 12595, "trend": 14490}, {"year": 1936, "value": 13244, "trend": 14780}, {"year": 1937, "value": 13841, "trend": 15075}, {"year": 1938, "value": 14293, "trend": 15377}, {"year": 1939, "value": 14949, "trend": 15685}, {"year": 1940, "value": 15382, "trend": 15998}, {"year": 1941, "value": 17695, "trend": 16318}, {"year": 1942, "value": 18363, "trend": 16645}, {"year": 1943, "value": 19202, "trend": 16977}, {"year": 1944, "value": 19868, "trend": 17317}, {"year": 1945, "value": 18467, "trend": 17663}, {"year": 1946, "value": 18335, "trend": 18017}, {"year": 1947, "value": 18255, "trend": 18377}, {"year": 1948, "value": 18565, "trend": 18744}, {"year": 1949, "value": 19105, "trend": 19119}, {"year": 1950, "value": 19372, "trend": 19502}, {"year": 1951, "value": 19739, "trend": 19892}, {"year": 1952, "value": 20111, "trend": 20290}, {"year": 1953, "value": 20806, "trend": 20695}, {"year": 1954, "value": 20953, "trend": 21109}, {"year": 1955, "value": 21423, "trend": 21532}, {"year": 1956, "value": 21914, "trend": 21962}, {"year": 1957, "value": 22568, "trend": 22401}, {"year": 1958, "value": 22658, "trend": 22849}, {"year": 1959, "value": 23283, "trend": 23306}, {"year": 1960, "value": 23796, "trend": 23773}, {"year": 1961, "value": 24434, "trend": 24248}, {"year": 1962, "value": 24891, "trend": 24733}, {"year": 1963, "value": 25411, "trend": 25228}, {"year": 1964, "value": 25618, "trend": 25732}, {"year": 1965, "value": 26202, "trend": 26247}, {"year": 1966, "value": 26696, "trend": 26772}, {"year": 1967, "value": 27517, "trend": 27307}, {"year": 1968, "value": 28108, "trend": 27853}, {"year": 1969, "value": 28212, "trend": 28410}, {"year": 1970, "value": 28791, "trend": 28979}, {"year": 1971, "value": 29400, "trend": 29558}, {"year": 1972, "value": 29989, "trend": 30149}, {"year": 1973, "value": 30743, "trend": 30752}, {"year": 1974, "value": 31423, "trend": 31367}, {"year": 1975, "value": 31843, "trend": 31995}, {"year": 1976, "value": 32311, "trend": 32635}, {"year": 1977, "value": 33233, "trend": 33287}, {"year": 1978, "value": 33864, "trend": 33953}, {"year": 1979, "value": 34678, "trend": 34632}, {"year": 1980, "value": 35645, "trend": 35325}, {"year": 1981, "value": 36169, "trend": 36031}, {"year": 1982, "value": 36763, "trend": 36752}, {"year": 1983, "value": 37575, "trend": 37487}, {"year": 1984, "value": 38371, "trend": 38237}, {"year": 1985, "value": 38653, "trend": 39001}, {"year": 1986, "value": 40099, "trend": 39781}, {"year": 1987, "value": 40804, "trend": 40577}, {"year": 1988, "value": 41699, "trend": 41389}, {"year": 1989, "value": 42468, "trend": 42216}, {"year": 1990, "value": 42968, "trend": 43061}, {"year": 1991, "value": 43833, "trend": 43922}, {"year": 1992, "value": 44445, "trend": 44800}, {"year": 1993, "value": 45819, "trend": 45696}, {"year": 1994, "value": 46202, "trend": 46610}, {"year": 1995, "value": 47131, "trend": 47542}, {"year": 1996, "value": 48211, "trend": 48493}, {"year": 1997, "value": 49129, "trend": 49463}, {"year": 1998, "value": 50291, "trend": 50452}, {"year": 1999, "value": 51001, "trend": 51461}, {"year": 2000, "value": 51966, "trend": 52491}, {"year": 2001, "value": 53167, "trend": 53541}, {"year": 2002, "value": 54176, "trend": 54611}, {"year": 2003, "value": 55552, "trend": 55704}, {"year": 2004, "value": 56278, "trend": 56818}, {"year": 2005, "value": 58388, "trend": 57954}, {"year": 2006, "value": 59248, "trend": 59113}, {"year": 2007, "value": 59871, "trend": 60295}, {"year": 2008, "value": 57525, "trend": 61501}, {"year": 2009, "value": 58787, "trend": 62731}, {"year": 2010, "value": 63812, "trend": 63986}, {"year": 2011, "value": 64773, "trend": 65266}, {"year": 2012, "value": 67035, "trend": 66571}, {"year": 2013, "value": 68572, "trend": 67902}, {"year": 2014, "value": 69213, "trend": 69260}, {"year": 2015, "value": 70623, "trend": 70646}, {"year": 2016, "value": 71462, "trend": 72058}, {"year": 2017, "value": 72915, "trend": 73500}, {"year": 2018, "value": 74734, "trend": 74970}, {"year": 2019, "value": 76109, "trend": 76469}, {"year": 2020, "value": 75371, "trend": 77998}, {"year": 2021, "value": 75859, "trend": 79558}, {"year": 2022, "value": 80376, "trend": 81150}, {"year": 2023, "value": 83519, "trend": 82773}, {"year": 2024, "value": 84476, "trend": 84428}, {"year": 2025, "value": 85508, "trend": 86117}], "fig2_curve": [{"s": 0.0, "f": 1.0}, {"s": 0.02, "f": 1.0051}, {"s": 0.04, "f": 1.0103}, {"s": 0.06, "f": 1.0156}, {"s": 0.08, "f": 1.0211}, {"s": 0.1, "f": 1.0267}, {"s": 0.12, "f": 1.0325}, {"s": 0.14, "f": 1.0384}, {"s": 0.16, "f": 1.0446}, {"s": 0.18, "f": 1.0509}, {"s": 0.2, "f": 1.0574}, {"s": 0.22, "f": 1.0641}, {"s": 0.24, "f": 1.071}, {"s": 0.26, "f": 1.0782}, {"s": 0.28, "f": 1.0856}, {"s": 0.3, "f": 1.0933}, {"s": 0.32, "f": 1.1012}, {"s": 0.34, "f": 1.1095}, {"s": 0.36, "f": 1.118}, {"s": 0.38, "f": 1.1269}, {"s": 0.4, "f": 1.1362}, {"s": 0.42, "f": 1.1459}, {"s": 0.44, "f": 1.156}, {"s": 0.46, "f": 1.1665}, {"s": 0.48, "f": 1.1776}, {"s": 0.5, "f": 1.1892}, {"s": 0.52, "f": 1.2014}, {"s": 0.54, "f": 1.2143}, {"s": 0.56, "f": 1.2278}, {"s": 0.58, "f": 1.2422}, {"s": 0.6, "f": 1.2574}, {"s": 0.62, "f": 1.2737}, {"s": 0.64, "f": 1.291}, {"s": 0.66, "f": 1.3096}, {"s": 0.68, "f": 1.3296}, {"s": 0.7, "f": 1.3512}, {"s": 0.72, "f": 1.3747}, {"s": 0.74, "f": 1.4004}, {"s": 0.76, "f": 1.4287}, {"s": 0.78, "f": 1.4601}, {"s": 0.8, "f": 1.4953}, {"s": 0.82, "f": 1.5353}, {"s": 0.84, "f": 1.5811}, {"s": 0.86, "f": 1.6348}, {"s": 0.88, "f": 1.699}, {"s": 0.9, "f": 1.7783}, {"s": 0.92, "f": 1.8803}, {"s": 0.94, "f": 2.0205}, {"s": 0.96, "f": 2.2361}, {"s": 0.98, "f": 2.6591}], "fig2_points": [{"s": 0.02, "f": 1.005}, {"s": 0.25, "f": 1.075}, {"s": 0.5, "f": 1.189}, {"s": 0.75, "f": 1.414}, {"s": 0.94, "f": 2.021}], "dyn_series": [{"year": 2025, "t": 0, "s": 0.0, "factor": 1.0}, {"year": 2026, "t": 1, "s": 0.01, "factor": 1.00252}, {"year": 2027, "t": 2, "s": 0.02, "factor": 1.00506}, {"year": 2028, "t": 3, "s": 0.03, "factor": 1.00764}, {"year": 2029, "t": 4, "s": 0.04, "factor": 1.01026}, {"year": 2030, "t": 5, "s": 0.05, "factor": 1.01291}, {"year": 2031, "t": 6, "s": 0.06, "factor": 1.01559}, {"year": 2032, "t": 7, "s": 0.07, "factor": 1.01831}, {"year": 2033, "t": 8, "s": 0.08, "factor": 1.02106}, {"year": 2034, "t": 9, "s": 0.09, "factor": 1.02386}, {"year": 2035, "t": 10, "s": 0.1, "factor": 1.02669}, {"year": 2036, "t": 11, "s": 0.11, "factor": 1.02956}, {"year": 2037, "t": 12, "s": 0.12, "factor": 1.03247}, {"year": 2038, "t": 13, "s": 0.13, "factor": 1.03543}, {"year": 2039, "t": 14, "s": 0.14, "factor": 1.03843}, {"year": 2040, "t": 15, "s": 0.15, "factor": 1.04147}, {"year": 2041, "t": 16, "s": 0.16, "factor": 1.04455}, {"year": 2042, "t": 17, "s": 0.17, "factor": 1.04768}, {"year": 2043, "t": 18, "s": 0.18, "factor": 1.05086}, {"year": 2044, "t": 19, "s": 0.19, "factor": 1.05409}, {"year": 2045, "t": 20, "s": 0.2, "factor": 1.05737}, {"year": 2046, "t": 21, "s": 0.21, "factor": 1.0607}, {"year": 2047, "t": 22, "s": 0.22, "factor": 1.06409}, {"year": 2048, "t": 23, "s": 0.23, "factor": 1.06752}, {"year": 2049, "t": 24, "s": 0.24, "factor": 1.07102}, {"year": 2050, "t": 25, "s": 0.25, "factor": 1.07457}, {"year": 2051, "t": 26, "s": 0.26, "factor": 1.07818}, {"year": 2052, "t": 27, "s": 0.27, "factor": 1.08186}, {"year": 2053, "t": 28, "s": 0.28, "factor": 1.08559}, {"year": 2054, "t": 29, "s": 0.29, "factor": 1.0894}, {"year": 2055, "t": 30, "s": 0.3, "factor": 1.09327}, {"year": 2056, "t": 31, "s": 0.31, "factor": 1.0972}, {"year": 2057, "t": 32, "s": 0.32, "factor": 1.10122}, {"year": 2058, "t": 33, "s": 0.33, "factor": 1.1053}, {"year": 2059, "t": 34, "s": 0.34, "factor": 1.10947}, {"year": 2060, "t": 35, "s": 0.35, "factor": 1.11371}, {"year": 2061, "t": 36, "s": 0.36, "factor": 1.11803}, {"year": 2062, "t": 37, "s": 0.37, "factor": 1.12244}, {"year": 2063, "t": 38, "s": 0.38, "factor": 1.12694}, {"year": 2064, "t": 39, "s": 0.39, "factor": 1.13153}, {"year": 2065, "t": 40, "s": 0.4, "factor": 1.13622}, {"year": 2066, "t": 41, "s": 0.41, "factor": 1.141}, {"year": 2067, "t": 42, "s": 0.42, "factor": 1.14589}, {"year": 2068, "t": 43, "s": 0.43, "factor": 1.15088}, {"year": 2069, "t": 44, "s": 0.44, "factor": 1.15599}, {"year": 2070, "t": 45, "s": 0.45, "factor": 1.16121}, {"year": 2071, "t": 46, "s": 0.46, "factor": 1.16655}, {"year": 2072, "t": 47, "s": 0.47, "factor": 1.17201}, {"year": 2073, "t": 48, "s": 0.48, "factor": 1.1776}, {"year": 2074, "t": 49, "s": 0.49, "factor": 1.18333}, {"year": 2075, "t": 50, "s": 0.5, "factor": 1.18921}, {"year": 2076, "t": 51, "s": 0.51, "factor": 1.19523}, {"year": 2077, "t": 52, "s": 0.52, "factor": 1.20141}, {"year": 2078, "t": 53, "s": 0.53, "factor": 1.20775}, {"year": 2079, "t": 54, "s": 0.54, "factor": 1.21426}, {"year": 2080, "t": 55, "s": 0.55, "factor": 1.22095}, {"year": 2081, "t": 56, "s": 0.56, "factor": 1.22783}, {"year": 2082, "t": 57, "s": 0.57, "factor": 1.2349}, {"year": 2083, "t": 58, "s": 0.58, "factor": 1.24219}, {"year": 2084, "t": 59, "s": 0.59, "factor": 1.2497}, {"year": 2085, "t": 60, "s": 0.6, "factor": 1.25743}, {"year": 2086, "t": 61, "s": 0.61, "factor": 1.26542}, {"year": 2087, "t": 62, "s": 0.62, "factor": 1.27366}, {"year": 2088, "t": 63, "s": 0.63, "factor": 1.28218}, {"year": 2089, "t": 64, "s": 0.64, "factor": 1.29099}, {"year": 2090, "t": 65, "s": 0.65, "factor": 1.30012}, {"year": 2091, "t": 66, "s": 0.66, "factor": 1.30957}, {"year": 2092, "t": 67, "s": 0.67, "factor": 1.31938}, {"year": 2093, "t": 68, "s": 0.68, "factor": 1.32957}, {"year": 2094, "t": 69, "s": 0.69, "factor": 1.34017}, {"year": 2095, "t": 70, "s": 0.7, "factor": 1.3512}, {"year": 2096, "t": 71, "s": 0.71, "factor": 1.3627}, {"year": 2097, "t": 72, "s": 0.72, "factor": 1.37471}, {"year": 2098, "t": 73, "s": 0.73, "factor": 1.38726}, {"year": 2099, "t": 74, "s": 0.74, "factor": 1.40041}, {"year": 2100, "t": 75, "s": 0.75, "factor": 1.41421}, {"year": 2101, "t": 76, "s": 0.76, "factor": 1.42872}, {"year": 2102, "t": 77, "s": 0.77, "factor": 1.444}, {"year": 2103, "t": 78, "s": 0.78, "factor": 1.46014}, {"year": 2104, "t": 79, "s": 0.79, "factor": 1.47722}, {"year": 2105, "t": 80, "s": 0.8, "factor": 1.49535}, {"year": 2106, "t": 81, "s": 0.81, "factor": 1.51465}, {"year": 2107, "t": 82, "s": 0.82, "factor": 1.53526}, {"year": 2108, "t": 83, "s": 0.83, "factor": 1.55736}, {"year": 2109, "t": 84, "s": 0.84, "factor": 1.58114}, {"year": 2110, "t": 85, "s": 0.85, "factor": 1.60686}, {"year": 2111, "t": 86, "s": 0.86, "factor": 1.63481}, {"year": 2112, "t": 87, "s": 0.87, "factor": 1.66538}, {"year": 2113, "t": 88, "s": 0.88, "factor": 1.69904}, {"year": 2114, "t": 89, "s": 0.89, "factor": 1.73641}, {"year": 2115, "t": 90, "s": 0.9, "factor": 1.77828}, {"year": 2116, "t": 91, "s": 0.91, "factor": 1.82574}, {"year": 2117, "t": 92, "s": 0.92, "factor": 1.8803}, {"year": 2118, "t": 93, "s": 0.93, "factor": 1.94413}, {"year": 2119, "t": 94, "s": 0.94, "factor": 2.02052}, {"year": 2120, "t": 95, "s": 0.95, "factor": 2.11474}, {"year": 2121, "t": 96, "s": 0.96, "factor": 2.23607}, {"year": 2122, "t": 97, "s": 0.97, "factor": 2.40281}, {"year": 2123, "t": 98, "s": 0.98, "factor": 2.65915}, {"year": 2124, "t": 99, "s": 0.99, "factor": 3.16228}], "metr": [{"label": "2020 (GPT-3)", "year": 2020.0, "seconds": 9}, {"label": "mid-2024", "year": 2024.5, "seconds": 660}, {"label": "mid-2026", "year": 2026.4, "seconds": 43200}], "metr_doubling_full": 6.3, "metr_doubling_recent": 3.8, "existential": [{"case": "Log utility", "tolerance": 33.3, "note": "any risk under 1-in-3 acceptable for 10%/yr growth"}, {"case": "Curved utility (marginal utility falls with square of consumption)", "tolerance": 2.5, "note": "only a 2.5% extinction risk acceptable"}, {"case": "Same curved utility, but AI also halves mortality", "tolerance": 25.0, "note": "1-in-4 extinction risk becomes acceptable once health gains are included"}], "covid": {"spend_pct_gdp": 4.0, "risk_pct": 0.3, "wtp_pct_gdp_per_1pct_mortality": 111.1, "safety_spend_suggested_pct_gdp": 0.33}};
+const CSS=getComputedStyle(document.documentElement);
+const ACC=CSS.getPropertyValue("--accent").trim(), GOLD=CSS.getPropertyValue("--gold").trim();
+const HAIR=CSS.getPropertyValue("--hair").trim(), GREY=CSS.getPropertyValue("--grey").trim(), INK=CSS.getPropertyValue("--ink").trim();
+const NS="http://www.w3.org/2000/svg";
+function E(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+function T(x,y,s,cls,anchor,fill){const e=E("text",{x,y,class:cls||"lab","text-anchor":anchor||"start"});if(fill)e.setAttribute("fill",fill);e.textContent=s;return e;}
+
+/* Fig 1: 150-year growth trend, log scale */
+(function(){
+  const svg=document.getElementById("growth"); if(!svg) return;
+  const data=D.income_series;
+  const W=720,H=320,L=56,R=16,Tm=20,Bm=34,pw=W-L-R,ph=H-Tm-Bm;
+  const y0=Math.log10(3000), y1=Math.log10(100000);
+  const x0=1870, x1=2025;
+  const X=y=>L+(y-x0)/(x1-x0)*pw;
+  const Y=v=>Tm+(1-(Math.log10(v)-y0)/(y1-y0))*ph;
+  [4000,8000,16000,32000,64000].forEach(v=>{
+    svg.appendChild(E("line",{x1:L,y1:Y(v),x2:L+pw,y2:Y(v),stroke:HAIR,"stroke-width":1}));
+    svg.appendChild(T(L-8,Y(v)+3.5,"$"+(v>=1000?(v/1000)+"k":v),"lab","end"));
+  });
+  [1880,1920,1960,2000,2025].forEach(yr=>{
+    svg.appendChild(T(X(yr),Tm+ph+16,yr,"lab","middle"));
+  });
+  let dTrend="M"+X(data[0].year)+" "+Y(data[0].trend);
+  data.forEach(d=>{dTrend+="L"+X(d.year).toFixed(1)+" "+Y(d.trend).toFixed(1);});
+  svg.appendChild(E("path",{d:dTrend,fill:"none",stroke:GREY,"stroke-width":1.3,"stroke-dasharray":"4 4"}));
+  let d="M"+X(data[0].year)+" "+Y(data[0].value);
+  data.forEach(dd=>{d+="L"+X(dd.year).toFixed(1)+" "+Y(dd.value).toFixed(1);});
+  svg.appendChild(E("path",{d,fill:"none",stroke:ACC,"stroke-width":2,"stroke-linejoin":"round"}));
+  svg.appendChild(T(X(1990),Y(60000)-8,"2.0% per year","anno","middle",GREY));
+  svg.appendChild(T(X(1932),Y(data.find(x=>x.year===1932).value)-12,"Depression","lab","middle",GOLD));
+  svg.appendChild(T(X(1943),Y(data.find(x=>x.year===1943).value)+16,"WW2","lab","middle",GOLD));
+})();
+
+/* Fig 2: automation-gain curve */
+(function(){
+  const svg=document.getElementById("automation"); if(!svg) return;
+  const curve=D.fig2_curve, pts=D.fig2_points;
+  const W=720,H=340,L=54,R=20,Tm=20,Bm=40,pw=W-L-R,ph=H-Tm-Bm;
+  const X=s=>L+s*pw;
+  const Y=f=>Tm+(1-(f-1)/(2.7-1))*ph;
+  [1,1.5,2,2.5].forEach(v=>{
+    svg.appendChild(E("line",{x1:L,y1:Y(v),x2:L+pw,y2:Y(v),stroke:HAIR}));
+    svg.appendChild(T(L-8,Y(v)+3.5,v.toFixed(1)+"x","lab","end"));
+  });
+  [0,0.25,0.5,0.75,1].forEach(v=>{
+    svg.appendChild(T(X(v),Tm+ph+16,(v*100)+"%","lab","middle"));
+  });
+  svg.appendChild(T(L+pw/2,Tm+ph+30,"share of the economy infinitely automated","lab","middle"));
+  let d="M"+X(curve[0].s)+" "+Y(curve[0].f);
+  curve.forEach(c=>{d+="L"+X(c.s).toFixed(1)+" "+Y(c.f).toFixed(1);});
+  svg.appendChild(E("path",{d,fill:"none",stroke:ACC,"stroke-width":2.2,"stroke-linejoin":"round"}));
+  pts.forEach(p=>{
+    svg.appendChild(E("circle",{cx:X(p.s),cy:Y(p.f),r:4,fill:GOLD}));
+    const above = p.s < 0.9;
+    svg.appendChild(T(X(p.s),Y(p.f)-10,Math.round(p.s*100)+"%: "+p.f.toFixed(2)+"x","anno",p.s>0.8?"end":"middle",GOLD));
+  });
+})();
+
+/* Fig 3: slow-build dynamic time series, log y-axis */
+(function(){
+  const svg=document.getElementById("dynamic"); if(!svg) return;
+  const data=D.dyn_series;
+  const W=720,H=320,L=54,R=16,Tm=20,Bm=34,pw=W-L-R,ph=H-Tm-Bm;
+  const x0=data[0].year, x1=data[data.length-1].year;
+  const y0=Math.log10(0.95), y1=Math.log10(3.5);
+  const X=y=>L+(y-x0)/(x1-x0)*pw;
+  const Y=f=>Tm+(1-(Math.log10(f)-y0)/(y1-y0))*ph;
+  [1,1.5,2,3].forEach(v=>{
+    svg.appendChild(E("line",{x1:L,y1:Y(v),x2:L+pw,y2:Y(v),stroke:HAIR}));
+    svg.appendChild(T(L-8,Y(v)+3.5,v.toFixed(1)+"x","lab","end"));
+  });
+  [data[0].year,2050,2075,2100,data[data.length-1].year].forEach(yr=>{
+    svg.appendChild(T(X(yr),Tm+ph+16,yr,"lab","middle"));
+  });
+  let d="M"+X(data[0].year)+" "+Y(data[0].factor);
+  data.forEach(dd=>{d+="L"+X(dd.year).toFixed(1)+" "+Y(dd.factor).toFixed(1);});
+  svg.appendChild(E("path",{d,fill:"none",stroke:ACC,"stroke-width":2.2,"stroke-linejoin":"round"}));
+  const flat = data.find(dd=>dd.year===2100);
+  svg.appendChild(T(X(2075),Y(1.15),"barely off the historical trend for 75 years","anno","middle",GREY));
+  const steep = data[data.length-1];
+  svg.appendChild(T(X(steep.year)-6,Y(steep.factor)-8,"then bends sharply","anno","end",GOLD));
+})();
+
+/* Fig 4: METR task horizon, log y-axis (seconds) */
+(function(){
+  const svg=document.getElementById("metr"); if(!svg) return;
+  const pts=D.metr;
+  const W=720,H=300,L=60,R=16,Tm=20,Bm=34,pw=W-L-R,ph=H-Tm-Bm;
+  const x0=2019.6, x1=2026.6;
+  const y0=Math.log10(5), y1=Math.log10(60*3600);
+  const X=y=>L+(y-x0)/(x1-x0)*pw;
+  const Y=s=>Tm+(1-(Math.log10(s)-y0)/(y1-y0))*ph;
+  const ticks=[{v:10,l:"10 sec"},{v:60,l:"1 min"},{v:600,l:"10 min"},{v:3600,l:"1 hr"},{v:36000,l:"10 hr"}];
+  ticks.forEach(t=>{
+    svg.appendChild(E("line",{x1:L,y1:Y(t.v),x2:L+pw,y2:Y(t.v),stroke:HAIR}));
+    svg.appendChild(T(L-8,Y(t.v)+3.5,t.l,"lab","end"));
+  });
+  [2020,2022,2024,2026].forEach(yr=>{
+    svg.appendChild(T(X(yr),Tm+ph+16,yr,"lab","middle"));
+  });
+  let d="M"+X(pts[0].year)+" "+Y(pts[0].seconds);
+  pts.forEach(p=>{d+="L"+X(p.year).toFixed(1)+" "+Y(p.seconds).toFixed(1);});
+  svg.appendChild(E("path",{d,fill:"none",stroke:ACC,"stroke-width":2.2,"stroke-linejoin":"round"}));
+  pts.forEach(p=>{
+    svg.appendChild(E("circle",{cx:X(p.year),cy:Y(p.seconds),r:4,fill:GOLD}));
+    svg.appendChild(T(X(p.year),Y(p.seconds)-11,p.label,"anno","middle",GOLD));
+  });
+  svg.appendChild(T(L+pw-4,Tm+14,"doubling every ~"+D.metr_doubling_full+" months (~"+D.metr_doubling_recent+" since late 2024)","lab","end",GREY));
+})();
+
+/* Fig 5: existential risk tolerance bars */
+(function(){
+  const box=document.getElementById("riskbars"); if(!box) return;
+  const rows=D.existential;
+  const max=40;
+  box.innerHTML = rows.map(r=>{
+    const w = Math.min(100, r.tolerance/max*100);
+    return '<div class="risk-row"><div class="rlab">'+r.case+'</div>'+
+      '<div class="rline"><div class="risk-track" style="flex:1"><div class="risk-fill" style="width:'+w+'%"></div></div>'+
+      '<span class="risk-val">'+r.tolerance.toFixed(1)+'%</span></div></div>';
+  }).join('');
+})();
+
+/* reveal */
+(function(){
+  const els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)||matchMedia("(prefers-reduced-motion: reduce)").matches){els.forEach(e=>e.classList.add('in'));return;}
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.15});
+  els.forEach(e=>io.observe(e));
+})();
+</script>
+</body>
+</html>
