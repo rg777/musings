@@ -4,6 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The metronome and the escape artist</title>
+<meta name="description" content="Spain haven't trailed for a single minute at this World Cup. Argentina have made a habit of nearly losing, then winning anyway. A model built from Elo ratings and expected goals settles it: 64-36.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Random Musings">
+<meta property="og:title" content="The metronome and the escape artist">
+<meta property="og:description" content="Spain haven't trailed for a single minute at this World Cup. Argentina have made a habit of nearly losing, then winning anyway. A model built from Elo ratings and expected goals settles it: 64-36.">
+<meta property="og:url" content="https://offthemodel.com/final-forecast.html">
+<meta property="og:image" content="https://offthemodel.com/og/og-worldcup.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The metronome and the escape artist: Spain 64%, Argentina 36% to win the 2026 World Cup final">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The metronome and the escape artist">
+<meta name="twitter:description" content="Spain vs Argentina, Sunday's World Cup final, run through an Elo-plus-xG model. One headline number, written down before kickoff.">
+<meta name="twitter:image" content="https://offthemodel.com/og/og-worldcup.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -122,8 +136,8 @@
       <path d="M2 7 C 14 2, 24 2, 36 7 S 58 12, 70 7 S 92 2, 104 7 S 126 12, 138 7"
         stroke="#B5533C" stroke-width="2.2" stroke-linecap="round" fill="none"/>
     </svg>
-    <p class="deck">Spain haven't trailed for a single minute at this World Cup. Argentina have made a habit of nearly losing, then winning anyway. Sunday's final comes down to which of those is a skill. I built a model to find out.</p>
-    <p class="meta">16 July 2026 &middot; a forecast, on the record before kickoff</p>
+    <p class="deck">Spain haven't trailed for a single minute at this World Cup. Argentina have made a habit of nearly losing, then winning anyway. Sunday's final comes down to which of those is a skill. Claude Fable built a model to find out.</p>
+    <p class="meta">16 July 2026 &middot; co-written with Claude Fable &middot; model and prediction by Claude Fable</p>
   </header>
 
   <article>
@@ -131,14 +145,14 @@
 
     <p>But what makes this final genuinely fascinating is <em>how</em> the two teams got here, because they could not have done it more differently. Spain have played like a metronome. Six wins and a draw, thirteen goals scored, exactly one conceded. They are the first team in World Cup history to keep six clean sheets in a single tournament, and they have not trailed for even one minute of it. Their unbeaten run across all competitions now stretches past three years. Argentina, meanwhile, have won all seven of their matches, and nearly lost half of them. Extra time against debutants Cape Verde. Two goals down against Egypt before storming back. Extra time again against Switzerland. And in the semifinal against England, a goal down until the 85th minute, when Enzo Fernández equalised and Lautaro Martínez headed a Messi cross home in stoppage time. Three consecutive knockout matches rescued from the brink.</p>
 
-    <p>So: the metronome or the escape artist? The honest way to answer is to build a forecast, write it down before the match, and let Sunday grade it. Here's mine.</p>
+    <p>So: the metronome or the escape artist? The honest way to answer is to build a forecast, write it down before the match, and let Sunday grade it. Here's the one Claude Fable built.</p>
 
     <figure class="reveal" id="fig1">
       <div class="figtab"></div>
       <div class="figtitle">The headline number</div>
       <div class="figsub">Probability of lifting the trophy, including extra time and penalties</div>
       <div id="headline"></div>
-      <div class="source">Author's model. Details and every assumption in the notes below</div>
+      <div class="source">Claude Fable's model. Details and every assumption in the notes below</div>
     </figure>
 
     <p>Spain, 64 to 36. Not a coin flip, but nowhere near a formality either: roughly the odds of rolling anything but a six. And the shape of the number matters as much as the number. The model gives Spain a 48% chance of winning inside 90 minutes against Argentina's 23%, but it also says there's a 28% chance this final needs extra time, and a 16% chance the World Cup is decided on penalties. If you're Argentina, that last number is the plan: survive, shorten the match, and take your chances from twelve yards with Emiliano Martínez in goal.</p>
@@ -156,14 +170,14 @@
 
     <p>The chart above is the whole argument in one picture. Spain's conceded bars are almost invisible: their worst defensive match of the entire tournament was 0.60 expected goals against, versus Portugal. Argentina's attacking bars are excellent, consistently around two expected goals a match, but the conceded bars keep flickering, and three of those seven matches carry a badge that should worry their fans: two went to extra time, and three needed a comeback. The pattern has a name in analytics, and it isn't "clutch." It's variance. Teams that repeatedly win close matches from losing positions are usually running hot, not revealing a hidden skill, and the numbers regress eventually. Argentina's fans will tell you Messi's teams are the exception. On Sunday we find out.</p>
 
-    <p>There's one more ingredient: legs. Argentina have played sixty more minutes of football than Spain at this tournament thanks to those two extra times, and they get one day less rest, having played their semifinal on Wednesday to Spain's Tuesday. The effect is small and I've kept it small in the model, but it points the same direction as everything else.</p>
+    <p>There's one more ingredient: legs. Argentina have played sixty more minutes of football than Spain at this tournament thanks to those two extra times, and they get one day less rest, having played their semifinal on Wednesday to Spain's Tuesday. The effect is small and the model keeps it small, but it points the same direction as everything else.</p>
 
     <figure class="reveal" id="fig3">
       <div class="figtab"></div>
       <div class="figtitle">How the number is built</div>
       <div class="figsub">Spain's probability of lifting the trophy, step by step</div>
       <svg id="waterfall" viewBox="0 0 700 240" aria-label="Waterfall chart: a neutral 50% baseline rises to 58.8% on the Elo ratings gap, to 62.0% when tournament expected-goals form is blended in, and to 64.3% after a small fatigue adjustment for Argentina's extra minutes and shorter rest."></svg>
-      <div class="source">Author's model. Each step is explained in the notes below</div>
+      <div class="source">Claude Fable's model. Each step is explained in the notes below</div>
     </figure>
 
     <p>And what scoreline should you expect? The model's favourite is the most Spanish result imaginable: 1-0. Low-scoring outcomes dominate, because this is a meeting of the tournament's two best defences and its two most patient midfields. Anything involving four or more goals is a genuine long shot.</p>
@@ -174,12 +188,12 @@
       <div class="figsub">Chance of each 90-minute scoreline. Rows: Spain. Columns: Argentina</div>
       <div class="heat" id="heat"></div>
       <div class="heatlab" id="heatlab"></div>
-      <div class="source">Author's model, Poisson scoreline grid</div>
+      <div class="source">Claude Fable's model, Poisson scoreline grid</div>
     </figure>
 
     <p>Now, the disclaimer that matters. This model is deliberately blind to names. It doesn't know that Lionel Messi, at 39, leads the Golden Boot with eight goals and four assists, has scored or assisted in eleven consecutive World Cup matches, and just dismantled England with two assists in the last five minutes. It doesn't know that Argentina have won all five World Cup penalty shootouts they've contested in the Messi era's back half, or that Emiliano Martínez turns shootouts into theatre. It treats Argentina's three comebacks as luck to be regressed, not evidence of the deepest reservoir of belief in world football. Every one of those things is real, and none of them fits in a Poisson distribution. If Argentina win on Sunday, it won't be because the model was wrong, exactly. It will be because football keeps a category the model doesn't: the things that only happen to teams that refuse to lose.</p>
 
-    <p>But a forecast has to pick, and mine picks the metronome. Spain by a goal, probably 1-0, possibly after a very long and very tense afternoon. <span class="kicker">Written down on Thursday. Sunday can laugh at it.</span></p>
+    <p>But a forecast has to pick, and this one picks the metronome. Spain by a goal, probably 1-0, possibly after a very long and very tense afternoon. <span class="kicker">Written down on Thursday. Sunday can laugh at it.</span></p>
   </article>
 
   <section class="refs">
@@ -193,13 +207,13 @@
     </div>
     <dl class="reflist">
       <dt>The Elo half</dt>
-      <dd>Elo ratings (eloratings.net, July 15): Spain 2,232, Argentina 2,177. On neutral ground a 55-point gap converts to an expected score of 0.578 for Spain. I then solve for the pair of Poisson goal-rates, totalling 2.4 goals (a typical final), that reproduces exactly that expected score. <span class="eg">Result: Spain 1.36, Argentina 1.04 expected goals. Elo alone, carried through extra time and penalties, makes Spain a 58.8% favourite for the trophy.</span></dd>
+      <dd>Elo ratings (eloratings.net, July 15): Spain 2,232, Argentina 2,177. On neutral ground a 55-point gap converts to an expected score of 0.578 for Spain. The model then solves for the pair of Poisson goal-rates, totalling 2.4 goals (a typical final), that reproduces exactly that expected score. <span class="eg">Result: Spain 1.36, Argentina 1.04 expected goals. Elo alone, carried through extra time and penalties, makes Spain a 58.8% favourite for the trophy.</span></dd>
       <dt>The xG half</dt>
       <dd>Each team's chances created and conceded per 90 minutes across all seven matches (Argentina's two extra-time matches count as 120 minutes). Raw rates: Argentina 1.93 created, 0.53 conceded; Spain 1.94 created, 0.31 conceded. Three corrections follow. First, schedule: Spain's average opponent was rated about 75 Elo points stronger (their knockout run was Austria, Portugal, Belgium, France against Argentina's Cape Verde, Egypt, Switzerland, England), so both teams' rates are re-based to a common opponent. Second, shrinkage: seven matches is a small sample, so rates are pulled 30% of the way toward the tournament average, which tempers Spain's historically extreme defensive numbers. Third, the two adjusted profiles are multiplied against each other, attack against defence. <span class="eg">Result: Spain 1.19, Argentina 0.68 expected goals. The xG half alone would make Spain a 65.5% favourite.</span></dd>
       <dt>Fatigue</dt>
       <dd>Argentina have played 60 more minutes and rest one day fewer. Research on rest effects in tournament football finds real but small penalties, so this term moves just 0.08 goals of expectation from Argentina to Spain. <span class="eg">Removing it entirely gives Spain 62.1%; doubling it gives 66.5%. It is not what decides this forecast.</span></dd>
       <dt>Extra time and penalties</dt>
-      <dd>If the 90-minute grid lands on a draw (28% chance), the model replays a 30-minute Poisson at the same per-minute rates. Draws that survive extra time (16% of all outcomes) go to penalties, scored as a 50-50 coin flip. Argentina's shootout record under Emiliano Martínez is famous, but academic work finds no reliably persistent team edge in shootouts, so I resisted the temptation. <span class="eg">Giving Argentina a 55-45 shootout edge would only move the headline from 64.3% to 63.5%.</span></dd>
+      <dd>If the 90-minute grid lands on a draw (28% chance), the model replays a 30-minute Poisson at the same per-minute rates. Draws that survive extra time (16% of all outcomes) go to penalties, scored as a 50-50 coin flip. Argentina's shootout record under Emiliano Martínez is famous, but academic work finds no reliably persistent team edge in shootouts, so Claude Fable kept it at a coin flip. <span class="eg">Giving Argentina a 55-45 shootout edge would only move the headline from 64.3% to 63.5%.</span></dd>
       <dt>What the model ignores, on purpose</dt>
       <dd>Messi's form, Argentina's comeback streak, crowd composition at MetLife, referee tendencies, and every narrative in between. Some of these are real forces. None can be measured well enough to earn a coefficient, and a forecast that quietly nudges its numbers toward the story it likes isn't a forecast, it's a preference with decimals.</dd>
     </dl>
@@ -209,7 +223,7 @@
     <h3 class="reftabhead">Sensitivity</h3>
     <div class="tabnote">Spain's trophy probability under different assumptions. The forecast is stable: every reasonable setting lands between 62% and 67%.</div>
     <div class="tabwrap"><table class="dtab" id="senstab"></table></div>
-    <p class="refnote">Elo ratings from eloratings.net as of July 15, 2026 (via footballratings.org). Ratings for seven group-stage and early-knockout opponents (Uruguay, Austria, Egypt, Algeria, Cape Verde, Jordan, Saudi Arabia) were not on the fetched page and are approximated from recent published values; they enter only through the schedule adjustment, where an error of 60 points moves the headline by under half a point. Match xG from RealGM's tournament tracker (Stats Perform data); the two semifinals from Opta via ESPN. Different xG providers differ slightly on any given match; no single-match difference changes the story. Blend weight (50-50), total-goals baseline (2.4), shrinkage (30%) and the fatigue term are judgment calls, each tested in the sensitivity table. The model was locked and this article written on July 16, three days before the final. All calculations are my own.</p>
+    <p class="refnote">Elo ratings from eloratings.net as of July 15, 2026 (via footballratings.org). Ratings for seven group-stage and early-knockout opponents (Uruguay, Austria, Egypt, Algeria, Cape Verde, Jordan, Saudi Arabia) were not on the fetched page and are approximated from recent published values; they enter only through the schedule adjustment, where an error of 60 points moves the headline by under half a point. Match xG from RealGM's tournament tracker (Stats Perform data); the two semifinals from Opta via ESPN. Different xG providers differ slightly on any given match; no single-match difference changes the story. Blend weight (50-50), total-goals baseline (2.4), shrinkage (30%) and the fatigue term are judgment calls, each tested in the sensitivity table. The model was locked and this article written on July 16, three days before the final. The data gathering, model and every calculation are by Claude Fable, Anthropic's AI model; the article itself is co-written.</p>
   </section>
 </div>
 
